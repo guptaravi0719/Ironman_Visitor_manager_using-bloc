@@ -9,6 +9,10 @@ class VisitorCategorySelectScreen extends StatefulWidget {
 
 class _VisitorCategorySelectScreenState
     extends State<VisitorCategorySelectScreen> {
+  final formKey = new GlobalKey<FormState>();
+
+  String _namel;
+  String _person_to_meet;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

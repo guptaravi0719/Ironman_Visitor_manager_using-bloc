@@ -7,24 +7,16 @@ import 'package:visitor_management/visitor/visitor_category_select_screen.dart';
 class VenueScreen extends StatelessWidget {
   final BaseAuth auth;
   final VoidCallback onsignedOut;
-  VenueScreen({this.auth, this.onsignedOut});
-  void _signOut() async {
-    try {
-      await auth.signOut();
+  final VoidCallback onsignedIn;
 
-
-    } catch (e) {
-      print("Error Signing out");
-    }
-  }
+  VenueScreen({this.auth, this.onsignedOut, this.onsignedIn});
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-
+        key: GlobalKey(),
         appBar: AppBar(
-
+          automaticallyImplyLeading: false,
           title: Text("Venue Login"),
         ),
         body: Center(
@@ -51,7 +43,19 @@ class VenueScreen extends StatelessWidget {
                 ),
                 RaisedButton(
                   onPressed: () async {
-                    _signOut();
+                    try {
+                      await auth.signOut();
+
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                LoginPage(auth: auth, onSignedIn: onsignedIn),
+                          ));
+                    } catch (e) {
+                      print(
+                          "Error signing out ${e} xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ");
+                    }
                   },
                   child: Text("Sign Out"),
                 )

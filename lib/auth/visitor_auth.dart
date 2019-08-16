@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = new GlobalKey<FormState>();
   String _email;
   String _password;
-  bool validateAndSave() {
+  bool _validateAndSave() {
     final form = formKey.currentState;
     if (form.validate()) {
       form.save();
@@ -34,11 +34,11 @@ class _LoginPageState extends State<LoginPage> {
     return false;
   }
 
-  void validateAndSubmit() async {
+  void _validateAndSubmit() async {
     FirebaseUser user;
     String userId;
 
-    if (validateAndSave()) {
+    if (_validateAndSave()) {
       try {
         userId =
             await widget.auth.signInWithEmailAndPassword(_email, _password);
@@ -71,10 +71,14 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
   }
+  BaseAuth auth;
+  VoidCallback onSignedOut;
+  VoidCallback onSignedIn;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
         appBar: AppBar(
           title: Text("Login"),
         ),
@@ -109,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
 
                           FirebaseUser user;
 
-                          if (validateAndSave()) {
+                          if (_validateAndSave()) {
                             Scaffold.of(context)
                               ..hideCurrentSnackBar()
                               ..showSnackBar(
@@ -164,10 +168,15 @@ class _LoginPageState extends State<LoginPage> {
                               setState(() {
                                 loading = false;
                               });
-                              Navigator.push(
+
+
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => VenueScreen()),
+                                    builder: (context) => VenueScreen(onsignedOut: onSignedOut,auth: auth,)
+
+
+                                ),
                               );
                               print("SIGNED AS USER: ${user.uid}");
                             } else {
@@ -175,20 +184,6 @@ class _LoginPageState extends State<LoginPage> {
                                   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                             }
 
-                            // FirebaseUser user = result.user;
-
-                            //  print('Signed in as : ${user.uid}');
-
-                            // try {
-                            //   FirebaseUser user = await FirebaseAuth.instance
-                            //       .signInWithEmailAndPassword(email: _email, password: _password);
-                            //      // FirebaseUser user = result.user;
-
-                            //   print('Signed in as : ${user.uid}');
-                            // }catch(e){
-                            //   print("Error: $e");
-
-                            // }
 
                           }
                         })

@@ -22,7 +22,9 @@ dependencies:
   cloud_firestore: ^0.8.2+3
   fluttertoast: ^3.1.0
   firebase_core:
+  firebase_storage: ^1.0.4
 
+  image_picker:
   intl:
   firebase_auth: 0.7.0
   http:

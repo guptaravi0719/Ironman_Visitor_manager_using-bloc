@@ -47,13 +47,11 @@ class _RootPageState extends State<RootPage> {
           auth: widget.auth,
           onSignedIn: _signedIn,
         );
-       break;
       case AuthStatus.signedIn:
         return VenueScreen(
           auth: widget.auth,
           onsignedOut: _signedOut,
         );
-        break;
     }
   }
 }
