@@ -7,7 +7,7 @@ var tempImage;
 
 Future getImage() async{
    tempImage=await ImagePicker.pickImage(
-    source: ImageSource.camera);
+    source: ImageSource.camera,imageQuality: 25);
 
 
 }

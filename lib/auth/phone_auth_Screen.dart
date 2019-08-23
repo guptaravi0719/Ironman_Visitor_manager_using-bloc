@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:visitor_management/auth/otp_screen.dart';
+import 'package:visitor_management/auth/uploading_image_dialogue.dart';
 import 'package:visitor_management/data_to_be_added';
 
 import 'package:visitor_management/visitor/image_picker.dart';
@@ -9,6 +11,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:visitor_management/visitor/visitor_detail_form_screen.dart';
 
 class PhoneAuthScreen extends StatefulWidget {
+
+  String category;
+  PhoneAuthScreen({this.category});
 
 
   @override
@@ -18,11 +23,11 @@ class PhoneAuthScreen extends StatefulWidget {
 class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
 
 
-  FirebaseAuth _firebaseAuth;
-  FirebaseUser _user;
+
+
 @override
   void initState() {
-  _firebaseAuth=FirebaseAuth.instance;
+ FirebaseAuth _firebaseAuth=FirebaseAuth.instance;
     // TODO: implement initState
     super.initState();
   }
@@ -36,24 +41,37 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   String verificationId;
 
   Future<void> verifyPhone() async {
+    PhoneCodeSent smsCodeSent;
+    smsCodeSent = (String verId, [int forceCodeResend]) {
+      this.verificationId = verId; Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                 OtpScreen(verificationId: verificationId,phoneNo:phoneNo,category: widget.category,)
+          ));
 
-    final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
-      this.verificationId = verId;
-      smsCodeDialogue(context).then((value) {});
+
+
+     // smsCodeDialogue(context);
+      print(forceCodeResend);
+      print(smsCodeSent);
     };
+
     final PhoneVerificationCompleted verificationSuccess = (FirebaseUser user) async {
       Future<String> s;
+
+
 Navigator.pop(context);
      uploadImage().whenComplete(() {
 
 
-data_to_add['phone no']=phoneNo;
+data_to_add['phone no']=phoneNo;                //adding phone no. to the Map after verification
 data_to_add['url']= "http";
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  VisitorDetailForm()
+                  VisitorDetailForm(category: widget.category,)
             ));
       }
 
@@ -77,62 +95,16 @@ data_to_add['url']= "http";
   );
   }
 
-  Future<bool> smsCodeDialogue(BuildContext context) {
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("SMS CODE :"),
-            content: TextField(
-              onChanged: (value) {
-                this.smsCode = value;
-              },
-            ),
-            actions: <Widget>[
-              new FlatButton(
-                  onPressed: () async {
-
-                    Navigator.pop(context);
-                    codeVerify(smsCode);
-            // FirebaseAuth.instance.signInWithPhoneNumber();
 
 
 
+void  codeVerify(String otp) async {
 
-
-
-
-                  },
-                  child: Text("Done"))
-            ],
-          );
-        });
-  }
-  Future<bool> smsCodeDialogue1(BuildContext context) {
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("SMS CODE :"),
-            content: Row(children: <Widget>[
-              Text("Uploading photo please wait..")
-
-            ],),
-
-          );
-        });
-  }
-
-void  codeVerify(smsCode) async {
-
-  FirebaseAuth.instance.signOut();
+  //FirebaseAuth.instance.signOut();
     FirebaseUser user;                  //verifying code on pressing done button on alert dialogue
 
     AuthCredential authCredential = PhoneAuthProvider.getCredential(
-        verificationId: verificationId, smsCode: smsCode);
-
+        verificationId: verificationId, smsCode: otp);
 
 
    user=  await FirebaseAuth.instance
@@ -146,23 +118,6 @@ void  codeVerify(smsCode) async {
 
 
     }
-//       catch (e) {
-//
-//      _scaffoldKey.currentState.showSnackBar(
-//        SnackBar(
-//          content: Row(
-//            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//            children: [
-//              Text('Verificaton failed'),
-//              Icon(Icons.error)
-//            ],
-//          ),
-//          backgroundColor: Colors.red,
-//        ),
-//      );
-//
-//      print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY${e.toString()}");
-//    }
   }
 
   @override
@@ -172,27 +127,32 @@ void  codeVerify(smsCode) async {
       appBar: AppBar(
         title: Text("Verify"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("Phone no."),
-            SizedBox(
-              height: 30.0,
-            ),
-            TextField(
-              decoration: InputDecoration(hintText: "Enter Mobile No."),
-              onChanged: (value) {
-                phoneNo = value;
-              },
-            ),
-            RaisedButton(
-              onPressed: () {
-                verifyPhone();
-               // FirebaseAuth.instance.signOut();
-              },
-            )
-          ],
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text("Phone:"),
+              SizedBox(
+                height: 30.0,
+              ),
+              TextField(
+                decoration: InputDecoration(hintText: "Enter Mobile No."),
+                onChanged: (value) {
+                  phoneNo = value;
+                },
+              ),
+              RaisedButton(
+                color: Colors.orange,
+                child: Text("Send",),
+                onPressed: () {
+                  verifyPhone();
+                 // FirebaseAuth.instance.signOut();
+                },
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -211,29 +171,12 @@ void  codeVerify(smsCode) async {
     try {
 
       final StorageReference firebaseStorageRef =
-                     FirebaseStorage.instance.ref().child("photos/ravi.img");
+                     FirebaseStorage.instance.ref().child("photos/img_+${widget.category}+${Random().nextInt(999999)}");
       uploadTask = firebaseStorageRef.putFile(sampleImage);
 if(uploadTask.isInProgress){
-  smsCodeDialogue1(context);
+  uploadingImageDialogue(context);
 
   if(uploadTask.isSuccessful){Navigator.pop(context);}
-
-//  _scaffoldKey.currentState
-//    ..hideCurrentSnackBar()
-//    ..showSnackBar(
-//      SnackBar(
-//        content: Row(
-//          mainAxisAlignment:
-//          MainAxisAlignment.spaceBetween,
-//          children: [
-//            Text('Uploading Please wait...'),
-//            CircularProgressIndicator()
-//          ],
-//        ),
-//        backgroundColor: Colors.black,
-//      ),
-//    );
-
 
   print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUploadingYYYYYYYYYYYYYYYYYY");
 
@@ -260,4 +203,5 @@ if(uploadTask.isInProgress){
     var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
     return dowurl.toString();
   }
+
 }

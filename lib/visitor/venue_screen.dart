@@ -18,6 +18,7 @@ class VenueScreen extends StatelessWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text("Venue Login"),
+          centerTitle: true,
         ),
         body: Center(
           child: Padding(
@@ -25,12 +26,10 @@ class VenueScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Text("Venue Login",
-                    style:
-                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.w700)),
+               SizedBox(height: MediaQuery.of(context).size.height/2.8,),
                 RaisedButton(
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => VisitorCategorySelectScreen()),
@@ -46,7 +45,7 @@ class VenueScreen extends StatelessWidget {
                     try {
                       await auth.signOut();
 
-                      Navigator.pushReplacement(
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) =>

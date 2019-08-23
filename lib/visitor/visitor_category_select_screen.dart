@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:visitor_management/auth/mobile_verification_screen.dart';
 import 'package:visitor_management/auth/phone_auth_Screen.dart';
 
 class VisitorCategorySelectScreen extends StatefulWidget {
@@ -26,11 +27,14 @@ class _VisitorCategorySelectScreenState
             RaisedButton(
               child: Text("Visitor"),
               onPressed: (){
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => PhoneAuthScreen()),
+              //        builder: (context) => PhoneAuthScreen(category:"Visitor")),
+                      builder: (context) => MobileNumberVerifyScreen()),
+
                 );
+
 
               },
               color: Colors.orange,
@@ -41,6 +45,11 @@ class _VisitorCategorySelectScreenState
             RaisedButton(
               child: Text("Vendor"),
               onPressed: (){
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PhoneAuthScreen(category:"Vendor")),
+                );
 
 
               },
@@ -52,6 +61,11 @@ class _VisitorCategorySelectScreenState
             RaisedButton(
               child: Text("91 Lead"),
               onPressed: (){
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PhoneAuthScreen(category:"91 Lead")),
+                );
 
 
               },
@@ -61,9 +75,14 @@ class _VisitorCategorySelectScreenState
 
 
             RaisedButton(
-              child: Text("Couries"),
+              child: Text("Courier"),
               onPressed: (){
 
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PhoneAuthScreen(category:"Courier")),
+                );
 
               },
               color: Colors.orange,
@@ -75,6 +94,11 @@ class _VisitorCategorySelectScreenState
               child: Text("Day Pass"),
               onPressed: (){
 
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PhoneAuthScreen(category:"Day Pass")),
+                );
 
               },
               color: Colors.orange,

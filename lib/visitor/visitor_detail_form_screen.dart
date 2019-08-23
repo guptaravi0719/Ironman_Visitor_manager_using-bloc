@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:visitor_management/data_to_be_added';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:visitor_management/visitor/welcome_screen.dart';
 
 class VisitorDetailForm extends StatefulWidget {
+  String category;
+  VisitorDetailForm({this.category});
   @override
   _VisitorDetailFormState createState() => _VisitorDetailFormState();
 }
@@ -33,10 +36,20 @@ class _VisitorDetailFormState extends State<VisitorDetailForm> {
       data_to_add['name']=_name;
       data_to_add['person_to_meet']=_person_to_meet;
       data_to_add['time']=DateFormat("H:m:s").format(now);
+try {
+  Firestore.instance.collection(
+      '/locations/okhla/people/${DateFormat("dd-MM-yyyy").format(now)}/${widget
+          .category}').add(data_to_add);
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => WelcomeScreen()),
+  );
 
+}
+catch(e){
+  print("ERROR ON SAVING ON FIRESTORE");
 
-      Firestore.instance.collection('/locations/okhla/people/${DateFormat("dd-MM-yyyy").format(now)}/visitors').add(data_to_add).catchError(onError);
-
+}
 
   }}
 onError(){
