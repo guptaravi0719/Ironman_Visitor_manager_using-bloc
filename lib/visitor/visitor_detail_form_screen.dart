@@ -64,52 +64,74 @@ onError(){
       body:
       new Form(
           key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              new TextFormField(
-                decoration: InputDecoration(
-                  labelText: "name",
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: ListView(
+
+              children: <Widget>[
+Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+child:Image.asset("assets/person.png")
+
+  ,),
+
+                new TextFormField(
+                  decoration: InputDecoration(
+                    border:  OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+
+                    labelText: "name",
+                  ),
+                  validator: (value) =>
+                  value.isEmpty ? "Please enter your name" : null,
+                  onSaved: (value) => _name = value,
                 ),
-                validator: (value) =>
-                value.isEmpty ? "Please enter your name" : null,
-                onSaved: (value) => _name = value,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "person  name"),
-                obscureText: true,
-                validator: (value) =>
-                value.isEmpty ? "Enter the meeting person" : null,
-                onSaved: (value) => _person_to_meet= value,
-              ),
-              RaisedButton(
-                  child: new Text("Submit"),
-                  onPressed: () async {
-                     _validateAndSubmit();
+                SizedBox(height: 20.0,),
+                TextFormField(
+                  decoration: InputDecoration(labelText: "person  name",
+                    border:  OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+                  ),
+                  obscureText: true,
+                  validator: (value) =>
+                  value.isEmpty ? "Enter the meeting person" : null,
+                  onSaved: (value) => _person_to_meet= value,
+                ),
+                SizedBox(height: 30.0,),
+
+                ButtonTheme(
+                  height: 50.0,
+                  child: RaisedButton(
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0),
+                      ),
+
+                      child: new Text("Submit", style: TextStyle(color: Colors.white,fontSize: 20.0),),
+                      onPressed: () async {
+                         _validateAndSubmit();
 
 
 
-                    if (_validateAndSave()) {
-                      _scaffoldKey.currentState
-                        ..showSnackBar(
-                          SnackBar(
-                            content: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('Entering you in..'),
-                                CircularProgressIndicator()
-                              ],
-                            ),
-                            backgroundColor: Colors.black,
-                          ),
-                        );
+                        if (_validateAndSave()) {
+                          _scaffoldKey.currentState
+                            ..showSnackBar(
+                              SnackBar(
+                                content: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text('Entering you in..'),
+                                    CircularProgressIndicator()
+                                  ],
+                                ),
+                                backgroundColor: Colors.black,
+                              ),
+                            );
 
 
 
-                    }
-                  })
-            ],
+                        }
+                      }),
+                )
+              ],
+            ),
           )),
 
     );

@@ -8,6 +8,8 @@ import 'package:visitor_management/data_to_be_added';
 
 import 'package:visitor_management/visitor/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:visitor_management/visitor/page_route.dart';
+import 'package:visitor_management/visitor/visitor_category_select_screen.dart';
 import 'package:visitor_management/visitor/visitor_detail_form_screen.dart';
 
 class PhoneAuthScreen extends StatefulWidget {
@@ -43,7 +45,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   Future<void> verifyPhone() async {
     PhoneCodeSent smsCodeSent;
     smsCodeSent = (String verId, [int forceCodeResend]) {
-      this.verificationId = verId; Navigator.push(
+      this.verificationId = verId; Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) =>
@@ -125,7 +127,18 @@ void  codeVerify(String otp) async {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text("Verify"),
+        leading: GestureDetector(child: Icon(Icons.arrow_back_ios,color: Colors.white,),
+        onTap: (){
+          Navigator.pushReplacement(
+            context,
+            SlideRightRoute(
+                widget: VisitorCategorySelectScreen()),
+          );
+
+        },
+
+        ),
+        title: Text("OTP Verification",style: TextStyle(color: Colors.white),),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -133,23 +146,37 @@ void  codeVerify(String otp) async {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text("Phone:"),
+              Text("Enter Mobile Number",style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold,fontSize: 20.0),),
               SizedBox(
                 height: 30.0,
               ),
               TextField(
-                decoration: InputDecoration(hintText: "Enter Mobile No."),
+                decoration: InputDecoration(hintText: "Enter Mobile No."
+                , border:  OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+                labelText: "Phone No."
+                ),
                 onChanged: (value) {
                   phoneNo = value;
                 },
               ),
-              RaisedButton(
-                color: Colors.orange,
-                child: Text("Send",),
-                onPressed: () {
-                  verifyPhone();
-                 // FirebaseAuth.instance.signOut();
-                },
+
+             SizedBox(height: 30.0,),
+
+              ButtonTheme(
+                height: 50.0,
+                child: RaisedButton(
+                  shape: new RoundedRectangleBorder(
+
+
+                    borderRadius: new BorderRadius.circular(30.0),
+                  ),
+                  color: Theme.of(context).primaryColor,
+                  child: Text("Send OTP",style: TextStyle(color: Colors.white),),
+                  onPressed: () {
+                    verifyPhone();
+                   // FirebaseAuth.instance.signOut();
+                  },
+                ),
               )
             ],
           ),

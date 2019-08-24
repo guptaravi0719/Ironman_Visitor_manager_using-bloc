@@ -88,105 +88,152 @@ class _LoginPageState extends State<LoginPage> {
             padding: EdgeInsets.all(16.0),
             child: new Form(
                 key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                child: ListView(
+                //  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
+
+
+SizedBox(
+  height: MediaQuery.of(context).size.height/3,
+    width: MediaQuery.of(context).size.width/2,
+
+    child: Image.asset("assets/logo.png")
+
+),
+
+
+
+
+
                     new TextFormField(
+
+
+
+
                       decoration: InputDecoration(
+                       border:  OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+
+hintText: "Email",
                         labelText: "Email",
                       ),
                       validator: (value) =>
                           value.isEmpty ? "Email cant be empty" : null,
                       onSaved: (value) => _email = value,
                     ),
+
+
+
+
+                    SizedBox(height: 20.0,),
+
+
+
+
                     TextFormField(
-                      decoration: InputDecoration(labelText: "Password"),
+                      decoration: InputDecoration(labelText: "Password",
+                        border:  OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+                      ),
+
+
                       obscureText: true,
                       validator: (value) =>
                           value.isEmpty ? "Password cant be empty" : null,
                       onSaved: (value) => _password = value,
                     ),
-                    RaisedButton(
-                        child: new Text("Login"),
-                        onPressed: () async {
-                          //  validateAndSubmit();
 
-                          FirebaseUser user;
 
-                          if (_validateAndSave()) {
-                            Scaffold.of(context)
-                              ..hideCurrentSnackBar()
-                              ..showSnackBar(
-                                SnackBar(
-                                  content: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text('Loading...'),
-                                      CircularProgressIndicator()
-                                    ],
-                                  ),
-                                  backgroundColor: Colors.black,
-                                ),
-                              );
-                            try {
-                              setState(() {
-                                // loading = true;
-                              });
-                              user = await FirebaseAuth.instance
-                                  .signInWithEmailAndPassword(
-                                      email: _email, password: _password);
-                            } catch (e) {
-                              setState(() {
-                                // loading = false;
-                                snackbarlogin = true;
-                              });
-                              print("error signing in The ERROR IS ${e}");
 
-                              Scaffold.of(context)
-                                ..hideCurrentSnackBar()
-                                ..showSnackBar(
-                                  SnackBar(
-                                    content: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Login Failure'),
-                                        Icon(Icons.error)
-                                      ],
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                      child: ButtonTheme(
+                        height: 50.0,
+                        child: RaisedButton(
+                            color: Theme.of(context).primaryColor,
+                            shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0),
+                        ),
+                            child: new Text("Sign In",style: TextStyle(color: Colors.white,fontSize: 20.0),),
+                            onPressed: () async {
+                              //  validateAndSubmit();
+
+                              FirebaseUser user;
+
+                              if (_validateAndSave()) {
+                                Scaffold.of(context)
+                                  ..hideCurrentSnackBar()
+                                  ..showSnackBar(
+                                    SnackBar(
+                                      content: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Loading...'),
+                                          CircularProgressIndicator()
+                                        ],
+                                      ),
+                                      backgroundColor: Colors.black,
                                     ),
-                                    backgroundColor: Colors.red,
-                                  ),
-                                );
+                                  );
+                                try {
+                                  setState(() {
+                                    // loading = true;
+                                  });
+                                  user = await FirebaseAuth.instance
+                                      .signInWithEmailAndPassword(
+                                          email: _email, password: _password);
+                                } catch (e) {
+                                  setState(() {
+                                    // loading = false;
+                                    snackbarlogin = true;
+                                  });
+                                  print("error signing in The ERROR IS ${e}");
 
-                              // Find the Scaffold in the widget tree and use
-                              // it to show a SnackBar.
+                                  Scaffold.of(context)
+                                    ..hideCurrentSnackBar()
+                                    ..showSnackBar(
+                                      SnackBar(
+                                        content: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text('Login Failure'),
+                                            Icon(Icons.error)
+                                          ],
+                                        ),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    );
 
-                            }
+                                  // Find the Scaffold in the widget tree and use
+                                  // it to show a SnackBar.
 
-                            if (user != null) {
-                              setState(() {
-                                loading = false;
-                              });
+                                }
 
-
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => VenueScreen(onsignedOut: onSignedOut,auth: auth,)
+                                if (user != null) {
+                                  setState(() {
+                                    loading = false;
+                                  });
 
 
-                                ),
-                              );
-                              print("SIGNED AS USER: ${user.uid}");
-                            } else {
-                              print(
-                                  "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-                            }
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => VenueScreen(onsignedOut: onSignedOut,auth: auth,)
 
 
-                          }
-                        })
+                                    ),
+                                  );
+                                  print("SIGNED AS USER: ${user.uid}");
+                                } else {
+                                  print(
+                                      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                                }
+
+
+                              }
+                            }),
+                      ),
+                    )
                   ],
                 )),
           );

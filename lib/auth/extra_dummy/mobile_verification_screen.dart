@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nexmo_verify/basemodel.dart';
 import 'package:nexmo_verify/model/nexmo_response.dart';
 import 'package:nexmo_verify/nexmo_sms_verify.dart';
-import 'package:visitor_management/auth/progress_hud.dart';
+import 'package:visitor_management/auth/extra_dummy/progress_hud.dart';
 import 'otp_verification_screen.dart';
 
 
