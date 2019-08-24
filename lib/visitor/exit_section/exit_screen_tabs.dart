@@ -25,13 +25,13 @@ class _ExitScreenTabsState extends State<ExitScreenTabs> {
           bottom: TabBar(
           tabs: [
             Tab(child: Text("Visitor"),),
-            Tab(icon: Icon(Icons.directions_transit,color: Colors.white,)),
+            Tab(child: Text("Vendors"),),
 
-            Tab(icon: Icon(Icons.directions_car,color: Colors.white,)),
-            Tab(icon: Icon(Icons.directions_transit,color: Colors.white,)),
+            Tab(child: Text("91 Lead"),),
+            Tab(child: Text("Couriers"),),
 
-            Tab(icon: Icon(Icons.directions_car,color: Colors.white,)),
-            Tab(icon: Icon(Icons.directions_transit,color: Colors.white,)),
+            Tab(child: Text("DayPass"),),
+            Tab(child: Text("All"),),
           ],
         ),
         ),

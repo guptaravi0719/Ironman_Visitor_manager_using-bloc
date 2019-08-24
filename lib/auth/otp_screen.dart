@@ -47,13 +47,14 @@ class _OtpScreenState extends State<OtpScreen> {
       (Timer timer) => setState(
         () {
           if (_start < 1) {
+             var s;
             timer.cancel();
-            uploadImage().whenComplete(() {
+         s=  uploadImage().whenComplete(() {
               //opening detail filling scree on verification of otp
 
               data_to_add['phone no'] = widget
                   .phoneNo; //adding phone no. to the Map after verification
-              data_to_add['url'] = "http";
+
 
               Navigator.pushReplacement(
                   context,
@@ -175,17 +176,17 @@ class _OtpScreenState extends State<OtpScreen> {
 
   Future<String> uploadImage() async {
     await getImage();
-
+    StorageReference ref;
     setState(() {
       sampleImage = tempImage;
     });
 
     StorageUploadTask uploadTask;
     try {
-      final StorageReference firebaseStorageRef = FirebaseStorage.instance
+     ref  = FirebaseStorage.instance
           .ref()
           .child("photos/img_${widget.category}_${Random().nextInt(999999)}");
-      uploadTask = firebaseStorageRef.putFile(sampleImage);
+      uploadTask = ref.putFile(sampleImage);
       if (uploadTask.isInProgress) {
         uploadingImageDialogue(context);
 
@@ -198,7 +199,9 @@ class _OtpScreenState extends State<OtpScreen> {
           "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXError Uploading Image ${e.toString()}");
     }
 
-    var downurl = await (await uploadTask.onComplete).ref.getDownloadURL();
-    return downurl;
+    var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
+  var  url = dowurl.toString();
+data_to_add['url']=url;
+
   }
 }

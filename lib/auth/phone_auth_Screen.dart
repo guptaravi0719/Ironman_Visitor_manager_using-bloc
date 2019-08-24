@@ -63,12 +63,13 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
       Future<String> s;
 
 
-Navigator.pop(context);
-     uploadImage().whenComplete(() {
+    Navigator.pop(context);
+    s= uploadImage().whenComplete(() {
 
 
 data_to_add['phone no']=phoneNo;                //adding phone no. to the Map after verification
-data_to_add['url']= "http";
+data_to_add['url']= '$s';
+
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -186,8 +187,9 @@ void  codeVerify(String otp) async {
   }
 
   Future<String> uploadImage() async {
+    StorageReference ref;
 
-  await  getImage();
+    await  getImage();
 
     setState(() {
       sampleImage = tempImage;
@@ -197,9 +199,8 @@ void  codeVerify(String otp) async {
     StorageUploadTask uploadTask;
     try {
 
-      final StorageReference firebaseStorageRef =
-                     FirebaseStorage.instance.ref().child("photos/img_+${widget.category}+${Random().nextInt(999999)}");
-      uploadTask = firebaseStorageRef.putFile(sampleImage);
+   ref = FirebaseStorage.instance.ref().child("photos/img_+${widget.category}+${Random().nextInt(999999)}");
+      uploadTask = ref.putFile(sampleImage);
 if(uploadTask.isInProgress){
   uploadingImageDialogue(context);
 
@@ -226,9 +227,11 @@ if(uploadTask.isInProgress){
       print(
           "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXError Uploading Image ${e.toString()}");
     }
+  var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
+  String url = dowurl.toString();
 
-    var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
-    return dowurl.toString();
+    data_to_add['url']=url;
+
   }
 
 }
