@@ -44,6 +44,12 @@ class _CouriersListState extends State<CouriersList> {
 //              itemCount: snapshot.data.documents.length,
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (BuildContext context, int i) {
+                var url="https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png";
+                if(snapshot.data.documents[i]['url']!=null){
+                  setState(() {
+                    url=snapshot.data.documents[i]['url'];
+                  });
+                }
                   return snapshot.data.documents[i]['exit']==null?Container(
                     height: MediaQuery
                         .of(context)
@@ -54,8 +60,7 @@ class _CouriersListState extends State<CouriersList> {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: <Widget>[
-                            SizedBox(child: Image.network(
-                                snapshot.data.documents[i]['url']),
+                            SizedBox(child:Image.network(url),
                               height: MediaQuery
                                   .of(context)
                                   .size

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:meet_network_image/meet_network_image.dart';
 class VisitorsList extends StatefulWidget {
   @override
   _VisitorsListState createState() => _VisitorsListState();
@@ -41,6 +42,11 @@ class _VisitorsListState extends State<VisitorsList> {
 //              itemCount: snapshot.data.documents.length,
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (BuildContext context, int i) {
+
+              //    String url="https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png";
+//                  if(snapshot.data.documents[i]['url']!=null?true:false){
+//                   url=snapshot.data.documents[i]['url'];
+//                  }
                   return snapshot.data.documents[i]['exit']==null?Container(
                     height: MediaQuery
                         .of(context)
@@ -51,8 +57,19 @@ class _VisitorsListState extends State<VisitorsList> {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: <Widget>[
-                            SizedBox(child: Image.network(
-                                snapshot.data.documents[i]['url']),
+                            SizedBox(child:
+
+                        MeetNetworkImage(
+                          imageUrl:
+                          "https://random.dog/3f62f2c1-e0cb-4077-8cd9-1ca76bfe98d5.jpg",
+                          loadingBuilder: (context) => Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          errorBuilder: (context, e) => Center(
+                            child: Text('Error appear!'),
+                          ),
+                        ),
+                            //Image.network(snapshot.data.documents[i]['url']),
                               height: MediaQuery
                                   .of(context)
                                   .size

@@ -24,31 +24,30 @@ class PhoneAuthScreen extends StatefulWidget {
 }
 
 class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
-  bool isConnected;
+  bool isConnected = false;
+
   @override
   void initState() {
-
-    connectivity =new Connectivity();
-    subscription =connectivity.onConnectivityChanged.listen((ConnectivityResult result){
+    connectivity = new Connectivity();
+    subscription =
+        connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
       //do here something
-      if(result==ConnectivityResult.mobile||result==ConnectivityResult.wifi){
+      if (result == ConnectivityResult.mobile ||
+          result == ConnectivityResult.wifi) {
         setState(() {
-          isConnected=true;
+          isConnected = true;
         });
       }
-
-
-    }
-
-    );
+    });
 
     FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
     // TODO: implement initState
     super.initState();
   }
-@override
+
+  @override
   void dispose() {
-subscription.cancel();
+    subscription.cancel();
 
     // TODO: implement dispose
     super.dispose();
@@ -61,72 +60,69 @@ subscription.cancel();
   String smsCode;
   String verificationId;
 
-  Future<void> verifyPhone() async {
-    PhoneCodeSent smsCodeSent;
-    smsCodeSent = (String verId, [int forceCodeResend]) {
-      this.verificationId = verId;
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => OtpScreen(
-                    verificationId: verificationId,
-                    phoneNo: phoneNo,
-                    category: widget.category,
-                  )));
-
-      // smsCodeDialogue(context);
-      print(forceCodeResend);
-      print(smsCodeSent);
-    };
-
-    final PhoneVerificationCompleted verificationSuccess =
-        (FirebaseUser user) async {
-      Future<String> s;
-
-      Navigator.pop(context);
-      s = uploadImage().whenComplete(() {
-        data_to_add['phone no'] =
-            phoneNo; //adding phone no. to the Map after verification
-        data_to_add['url'] = '$s';
-
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => VisitorDetailForm(
-                      category: widget.category,
-                    )));
-      });
-
-      print('verified');
-    };
-    final PhoneVerificationFailed verificationFailed =
-        (AuthException exception) {
-      print("${exception.message}");
-    };
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: this.phoneNo,
-      timeout: const Duration(seconds: 5),
-      verificationCompleted: verificationSuccess,
-      verificationFailed: verificationFailed,
-      codeSent: smsCodeSent,
-    );
-  }
-
-  void codeVerify(String otp) async {
-    //FirebaseAuth.instance.signOut();
-    FirebaseUser
-        user; //verifying code on pressing done button on alert dialogue
-
-    AuthCredential authCredential = PhoneAuthProvider.getCredential(
-        verificationId: verificationId, smsCode: otp);
-
-    user = await FirebaseAuth.instance.signInWithCredential(authCredential);
-
-    // final FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
-    if (user != null) {
-      print('signed in with phone number successful: user -> $user');
-    }
-  }
+//  Future<void> verifyPhone() async {
+//    PhoneCodeSent smsCodeSent;
+//    smsCodeSent = (String verId, [int forceCodeResend]) {
+//      this.verificationId = verId;
+//     // Navigator.pushReplacement(
+//      //    context,
+////          MaterialPageRoute(
+////              builder: (context) => OtpScreen(
+////                    verificationId: verificationId,
+////                    phoneNo: phoneNo,
+////                    category: widget.category,
+////                  )));
+//
+//      // smsCodeDialogue(context);
+//
+//    };
+//
+//    final PhoneVerificationCompleted verificationSuccess =
+//        (FirebaseUser user) async {
+//
+//
+//      Navigator.pop(context);
+//      s = uploadImage().whenComplete(() {
+//        data_to_add['phone no'] =
+//            phoneNo; //adding phone no.to the Map after verification
+//        data_to_add['url'] = '$s';
+//
+//        Navigator.pushReplacement(
+//            context,
+//            MaterialPageRoute(
+//                builder: (context) => VisitorDetailForm(
+//                      category: widget.category,
+//                    )));
+//      });
+//
+//      print('verified');
+//    };
+//    final PhoneVerificationFailed verificationFailed =
+//        (AuthException exception) {
+//      print("${exception.message}");
+//    };
+//    await FirebaseAuth.instance.verifyPhoneNumber(
+//      phoneNumber: this.phoneNo,
+//      timeout: const Duration(seconds: 5),
+//      verificationCompleted: verificationSuccess,
+//      verificationFailed: verificationFailed,
+//      codeSent: smsCodeSent,
+//    );
+//  }
+//
+//  void codeVerify(String otp) async {
+//    FirebaseUser
+//        user; //verifying code on pressing done button on alert dialogue
+//
+//    AuthCredential authCredential = PhoneAuthProvider.getCredential(
+//        verificationId: verificationId, smsCode: otp);
+//
+//    user = await FirebaseAuth.instance.signInWithCredential(authCredential);
+//
+//    if (user != null) {
+//      print('signed in with phone number successful: user -> $user');
+//    }
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -191,8 +187,8 @@ subscription.cancel();
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                                               verifyPhone();
-                    // FirebaseAuth.instance.signOut();
+                    setState(() {});
+                    isConnected ? _onlineMode() : _offlineMode();
                   },
                 ),
               )
@@ -203,30 +199,55 @@ subscription.cancel();
     );
   }
 
+  void _offlineMode() {
+    data_to_add['phone no'] =
+        phoneNo;
+    Navigator.push(context, SlideRightRoute(widget: VisitorDetailForm(
+      category: widget.category,
+    )));
+  }
+
+  void _onlineMode() {
+
+   //when internet connected
+
+    uploadImage();
+        data_to_add['phone no'] =
+            phoneNo; //adding phone no.to the Map after verification
+
+
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => VisitorDetailForm(
+                      category: widget.category,
+                    )));
+
+
+  }
+
   Future<String> uploadImage() async {
     StorageReference ref;
 
     await getImage();
-
-    setState(() {
-      sampleImage = tempImage;
-    });
-
+    sampleImage = tempImage;
     StorageUploadTask uploadTask;
     try {
+//      var sessionUri;
       ref = FirebaseStorage.instance
           .ref()
           .child("photos/img_+${widget.category}+${Random().nextInt(999999)}");
       uploadTask = ref.putFile(sampleImage);
-      if (uploadTask.isInProgress) {
-        uploadingImageDialogue(context);
-
-        if (uploadTask.isSuccessful) {
-          Navigator.pop(context);
-        }
-
-        print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUploadingYYYYYYYYYYYYYYYYYY");
-      }
+//      sessionUri = uploadTask.getUploadSessionUri();
+//      if (uploadTask.isInProgress) {
+//        uploadingImageDialogue(context);
+//
+//        if (uploadTask.isSuccessful) {
+//          Navigator.pop(context);
+//        }
+//
+//        print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUploadingYYYYYYYYYYYYYYYYYY");
+//      }
     } catch (e) {
       _scaffoldKey.currentState.showSnackBar(
         SnackBar(
@@ -247,5 +268,8 @@ subscription.cancel();
     String url = dowurl.toString();
 
     data_to_add['url'] = url;
+
+    url="";  //make url null after one call
+
   }
 }

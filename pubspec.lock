@@ -326,6 +326,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.5"
+  meet_network_image:
+    dependency: "direct main"
+    description:
+      name: meet_network_image
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   meta:
     dependency: transitive
     description:
