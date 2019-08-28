@@ -6,6 +6,7 @@ import 'auth.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({this.auth, this.onSignedIn});
+
   BaseAuth auth;
   final VoidCallback onSignedIn;
 
@@ -25,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = new GlobalKey<FormState>();
   String _email;
   String _password;
+
   bool _validateAndSave() {
     final form = formKey.currentState;
     if (form.validate()) {
@@ -71,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
   }
+
   BaseAuth auth;
   VoidCallback onSignedOut;
   VoidCallback onSignedIn;
@@ -78,7 +81,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
         appBar: AppBar(
           title: Text("Login"),
         ),
@@ -89,60 +91,37 @@ class _LoginPageState extends State<LoginPage> {
             child: new Form(
                 key: formKey,
                 child: ListView(
-                //  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  //  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-
-
-SizedBox(
-  height: MediaQuery.of(context).size.height/3,
-    width: MediaQuery.of(context).size.width/2,
-
-    child: Image.asset("assets/logo.png")
-
-),
-
-
-
-
-
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height / 3,
+                        width: MediaQuery.of(context).size.width / 2,
+                        child: Image.asset("assets/logo.png")),
                     new TextFormField(
-
-
-
-
                       decoration: InputDecoration(
-                       border:  OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-
-hintText: "Email",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                        hintText: "Email",
                         labelText: "Email",
                       ),
                       validator: (value) =>
                           value.isEmpty ? "Email cant be empty" : null,
                       onSaved: (value) => _email = value,
                     ),
-
-
-
-
-                    SizedBox(height: 20.0,),
-
-
-
-
+                    SizedBox(
+                      height: 20.0,
+                    ),
                     TextFormField(
-                      decoration: InputDecoration(labelText: "Password",
-                        border:  OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+                      decoration: InputDecoration(
+                        labelText: "Password",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
                       ),
-
-
                       obscureText: true,
                       validator: (value) =>
                           value.isEmpty ? "Password cant be empty" : null,
                       onSaved: (value) => _password = value,
                     ),
-
-
-
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
                       child: ButtonTheme(
@@ -150,9 +129,13 @@ hintText: "Email",
                         child: RaisedButton(
                             color: Theme.of(context).primaryColor,
                             shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0),
-                        ),
-                            child: new Text("Sign In",style: TextStyle(color: Colors.white,fontSize: 20.0),),
+                              borderRadius: new BorderRadius.circular(30.0),
+                            ),
+                            child: new Text(
+                              "Sign In",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20.0),
+                            ),
                             onPressed: () async {
                               //  validateAndSubmit();
 
@@ -214,22 +197,19 @@ hintText: "Email",
                                     loading = false;
                                   });
 
-
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => VenueScreen(onsignedOut: onSignedOut,auth: auth,)
-
-
-                                    ),
+                                        builder: (context) => VenueScreen(
+                                              onsignedOut: onSignedOut,
+                                              auth: auth,
+                                            )),
                                   );
                                   print("SIGNED AS USER: ${user.uid}");
                                 } else {
                                   print(
                                       "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                                 }
-
-
                               }
                             }),
                       ),
