@@ -194,6 +194,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
+                    setState(() {});
                     setState(() {
                       _text.text.isEmpty ? _validate = true : _validate = false;
                     });
@@ -237,10 +238,9 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   void uploadImage() async {
     StorageReference ref;
 
-    getImage().whenComplete(() {
-      setState(() {
-        sampleImage = tempImage;
-      });
+    getImage();
+    setState(() {
+      sampleImage = tempImage;
     });
     StorageUploadTask uploadTask;
     try {

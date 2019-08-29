@@ -19,38 +19,53 @@ class VenueScreen extends StatelessWidget {
         key: GlobalKey(),
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text("Venue Login",style: TextStyle(color: Colors.white),),
+          title: Text(
+            "Venue Login",
+            style: TextStyle(color: Colors.white),
+          ),
           centerTitle: true,
         ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            child: ListView(
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-               SizedBox(height: MediaQuery.of(context).size.height/2.8,
-               child: Image.asset("assets/logo_horizontal.png"),
-               ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 2.8,
+                  child: Image.asset("assets/logo_horizontal.png"),
+                ),
                 ButtonTheme(
                   height: 50.0,
                   child: RaisedButton(
                     color: Colors.orange[300],
-
                     shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0),
                     ),
                     onPressed: () {
                       Navigator.push(
                         context,
-                        SlideRightRoute(
-                         widget:VisitorCategorySelectScreen()),
+                        SlideRightRoute(widget: VisitorCategorySelectScreen()),
                       );
                     },
-child: Row(mainAxisAlignment: MainAxisAlignment.center,
-  children: <Widget>[
-    Text("Proceed",style: TextStyle(color:Colors.white,fontSize: 20.0),),SizedBox(width: 20.0,),Icon(Icons.done_outline,color: Colors.white,size: 20.0,)
-  ],
-),                ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Proceed",
+                          style: TextStyle(color: Colors.white, fontSize: 20.0),
+                        ),
+                        SizedBox(
+                          width: 20.0,
+                        ),
+                        Icon(
+                          Icons.done_outline,
+                          color: Colors.white,
+                          size: 20.0,
+                        )
+                      ],
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 50.0,
@@ -69,7 +84,7 @@ child: Row(mainAxisAlignment: MainAxisAlignment.center,
 
                         Navigator.push(
                             context,
-                           SlideRightRoute(
+                            SlideRightRoute(
                               widget:
                                   LoginPage(auth: auth, onSignedIn: onsignedIn),
                             ));
@@ -78,9 +93,21 @@ child: Row(mainAxisAlignment: MainAxisAlignment.center,
                             "Error signing out ${e} xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ");
                       }
                     },
-                    child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text("Sign Out",style: TextStyle(color:Colors.white,fontSize: 20.0),),SizedBox(width: 20.0,),Icon(Icons.exit_to_app,color: Colors.white,size: 20.0,)
+                        Text(
+                          "Sign Out",
+                          style: TextStyle(color: Colors.white, fontSize: 20.0),
+                        ),
+                        SizedBox(
+                          width: 20.0,
+                        ),
+                        Icon(
+                          Icons.exit_to_app,
+                          color: Colors.white,
+                          size: 20.0,
+                        )
                       ],
                     ),
                   ),
