@@ -223,8 +223,14 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
 
   Future _onlineMode() async {
     //when internet connected
+    try {
+      await uploadImage();
+      print("EXEDSKFLJDLGDLDLNSBNSDJKBNDJKNBKDJNBJDKBKJ");
+    } catch (e) {
+      print(e);
+      print("ERRRORROOROORRORORORORORORO");
+    }
 
-    await uploadImage();
     data_to_add['phone no'] =
         "+91" + phoneNo; //adding phone no.to the Map after verification
     Navigator.pushReplacement(
@@ -238,7 +244,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   void uploadImage() async {
     StorageReference ref;
 
-    getImage();
+    await getImage();
     setState(() {
       sampleImage = tempImage;
     });
