@@ -1,13 +1,12 @@
 import 'dart:math';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:visitor_management/auth/otp_screen.dart';
+import 'package:flutter/services.dart';
 import 'package:visitor_management/auth/uploading_image_dialogue.dart';
 import 'package:visitor_management/connectivity_checker.dart';
 import 'package:visitor_management/data_to_be_added';
-
 import 'package:visitor_management/visitor/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:visitor_management/visitor/page_route.dart';
@@ -24,6 +23,8 @@ class PhoneAuthScreen extends StatefulWidget {
 }
 
 class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
+  final _text = TextEditingController();
+  bool _validate = false;
   bool isConnected = false;
 
   @override
@@ -48,8 +49,6 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   @override
   void dispose() {
     subscription.cancel();
-
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -163,7 +162,15 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                 height: 30.0,
               ),
               TextField(
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  LengthLimitingTextInputFormatter(10),
+                  WhitelistingTextInputFormatter.digitsOnly,
+                  BlacklistingTextInputFormatter.singleLineFormatter,
+                ],
+                controller: _text,
                 decoration: InputDecoration(
+                    errorText: _validate ? 'Value Can\'t Be Empty' : null,
                     hintText: "Enter Mobile No.",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0)),
@@ -183,12 +190,16 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                   ),
                   color: Theme.of(context).primaryColor,
                   child: Text(
-                    "Send OTP",
+                    "Next",
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    setState(() {});
-                    isConnected ? _onlineMode() : _offlineMode();
+                    setState(() {
+                      _text.text.isEmpty ? _validate = true : _validate = false;
+                    });
+                    if (_text.text.isNotEmpty) {
+                      isConnected ? _onlineMode() : _offlineMode();
+                    }
                   },
                 ),
               )
@@ -200,76 +211,57 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   }
 
   void _offlineMode() {
+    data_to_add['phone no'] = phoneNo;
+    Navigator.push(
+        context,
+        SlideRightRoute(
+            widget: VisitorDetailForm(
+          category: widget.category,
+        )));
+  }
+
+  Future _onlineMode() async {
+    //when internet connected
+
+    await uploadImage();
     data_to_add['phone no'] =
-        phoneNo;
-    Navigator.push(context, SlideRightRoute(widget: VisitorDetailForm(
-      category: widget.category,
-    )));
+        "+91" + phoneNo; //adding phone no.to the Map after verification
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => VisitorDetailForm(
+                  category: widget.category,
+                )));
   }
 
-  void _onlineMode() {
-
-   //when internet connected
-
-    uploadImage();
-        data_to_add['phone no'] =
-            phoneNo; //adding phone no.to the Map after verification
-
-
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => VisitorDetailForm(
-                      category: widget.category,
-                    )));
-
-
-  }
-
-  Future<String> uploadImage() async {
+  void uploadImage() async {
     StorageReference ref;
 
-    await getImage();
-    sampleImage = tempImage;
+    getImage().whenComplete(() {
+      setState(() {
+        sampleImage = tempImage;
+      });
+    });
     StorageUploadTask uploadTask;
     try {
-//      var sessionUri;
       ref = FirebaseStorage.instance
           .ref()
           .child("photos/img_+${widget.category}+${Random().nextInt(999999)}");
       uploadTask = ref.putFile(sampleImage);
-//      sessionUri = uploadTask.getUploadSessionUri();
-//      if (uploadTask.isInProgress) {
-//        uploadingImageDialogue(context);
-//
-//        if (uploadTask.isSuccessful) {
-//          Navigator.pop(context);
-//        }
-//
-//        print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYUploadingYYYYYYYYYYYYYYYYYY");
-//      }
-    } catch (e) {
-      _scaffoldKey.currentState.showSnackBar(
-        SnackBar(
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Error Uploading image. Please Try again...'),
-              Icon(Icons.error)
-            ],
-          ),
-          backgroundColor: Colors.red,
-        ),
-      );
-      print(
-          "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXError Uploading Image ${e.toString()}");
-    }
+
+      // if (uploadTask.isInProgress) {
+      //   uploadingImageDialogue(context);
+
+      //   if (uploadTask.isSuccessful) {
+      //     Navigator.pop(context);
+      //   }
+      // }
+    } catch (e) {}
     var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
     String url = dowurl.toString();
 
     data_to_add['url'] = url;
 
-    url="";  //make url null after one call
-
+    url = ""; //make url null after one call
   }
 }

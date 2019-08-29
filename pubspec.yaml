@@ -20,6 +20,9 @@ dependencies:
   flutter:
     sdk: flutter
   cloud_firestore: ^0.8.2+3
+  rating_bar:
+  smooth_star_rating: ^1.0.3
+  flutter_rating_bar:
   fluttertoast: ^3.1.0
   firebase_core:
   firebase_storage: ^1.0.4
