@@ -83,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+        automaticallyImplyLeading: false,
           title: Text("Login"),
         ),
         body: Builder(builder: (BuildContext context) {
@@ -232,7 +233,7 @@ class _LoginPageState extends State<LoginPage> {
       borderRadius: 5.0,
       animationDuration: Duration(seconds: 2),
 
-      borderColor: Colors.blue,isDismissible: true,
+      borderColor: Colors.white,isDismissible: true,
       padding: EdgeInsets.all(10.0),
 
       backgroundGradient: LinearGradient(
