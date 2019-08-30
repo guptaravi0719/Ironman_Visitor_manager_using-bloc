@@ -224,7 +224,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   Future _onlineMode() async {
     //when internet connected
     try {
-      await uploadImage();
+       uploadImage();
       print("EXEDSKFLJDLGDLDLNSBNSDJKBNDJKNBKDJNBJDKBKJ");
     } catch (e) {
       print(e);
@@ -245,9 +245,9 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
     StorageReference ref;
 
     await getImage();
-    setState(() {
+
       sampleImage = tempImage;
-    });
+
     StorageUploadTask uploadTask;
     try {
       ref = FirebaseStorage.instance
