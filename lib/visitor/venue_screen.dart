@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:visitor_management/auth/auth.dart';
@@ -79,16 +80,21 @@ class VenueScreen extends StatelessWidget {
                       borderRadius: new BorderRadius.circular(30.0),
                     ),
                     onPressed: () async {
+                      _showSignOutFloatingFlushbar(context);
                       try {
-                        await auth.signOut();
+                        await FirebaseAuth.instance.signOut();
+Future.delayed(Duration(seconds: 2)).whenComplete((){
+  Navigator.pushReplacement(
+      context,
+      SlideRightRoute(
+        widget:
+        LoginPage(auth: auth, onSignedIn: onsignedIn),
+      ));
 
-                        Navigator.push(
-                            context,
-                            SlideRightRoute(
-                              widget:
-                                  LoginPage(auth: auth, onSignedIn: onsignedIn),
-                            ));
+});
+
                       } catch (e) {
+                        _showErrorFloatingFlushbar(context);
                         print(
                             "Error signing out ${e} xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ");
                       }
@@ -116,5 +122,67 @@ class VenueScreen extends StatelessWidget {
             ),
           ),
         ));
+  }
+  void _showSignOutFloatingFlushbar(BuildContext context) {
+    Flushbar(backgroundColor: Colors.orange,
+      margin: EdgeInsets.all(8),
+      showProgressIndicator: true,
+      duration: Duration(seconds: 4),
+      borderRadius: 5.0,
+      animationDuration: Duration(seconds: 2),
+isDismissible: true,
+      padding: EdgeInsets.all(8.0),
+
+      backgroundGradient: LinearGradient(
+        colors: [Colors.orange[300], Colors.orange[200]],
+        stops: [0.6, 1],
+      ),
+      boxShadows: [
+        BoxShadow(
+          color: Colors.black45,
+          offset: Offset(3, 3),
+          blurRadius: 3,
+        ),
+      ],
+      // All of the previous Flushbars could be dismissed by swiping down
+      // now we want to swipe to the sides
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      // The default curve is Curves.easeOut
+      forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
+      title: 'Signing Out..',
+      message: 'Bye Bye!',
+    ).show(context);
+  }
+  void _showErrorFloatingFlushbar(BuildContext context) {
+    Flushbar(backgroundColor: Colors.orange,
+      icon:Icon(Icons.error),
+      margin: EdgeInsets.all(5.0),
+      borderRadius: 5.0,
+      duration: Duration(seconds: 4),
+      animationDuration: Duration(seconds: 2),
+
+      borderColor: Colors.white,isDismissible: true,
+//      padding: EdgeInsets.all(12.0),
+      flushbarStyle: FlushbarStyle.FLOATING,
+      backgroundGradient: LinearGradient(
+        colors: [Colors.red.shade400, Colors.redAccent.shade200],
+        stops: [0.6, 1],
+      ),
+      boxShadows: [
+        BoxShadow(
+          color: Colors.black45,
+          offset: Offset(3, 3),
+          blurRadius: 3,
+        ),
+      ],
+      messageText: Text("Check connectivity or Refresh the App",style: TextStyle(color: Colors.white),),
+      // All of the previous Flushbars could be dismissed by swiping down
+      // now we want to swipe to the sides
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      // The default curve is Curves.easeOut
+      forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
+      title: 'Error Signing out.',
+      message: 'please try again',
+    ).show(context);
   }
 }

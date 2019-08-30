@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:visitor_management/visitor/page_route.dart';
 import 'package:visitor_management/visitor/visitor_category_select_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -50,8 +51,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => VisitorCategorySelectScreen()),
+                      SlideRightRoute(
+                       widget:VisitorCategorySelectScreen()),
                   );
                 },
               ),

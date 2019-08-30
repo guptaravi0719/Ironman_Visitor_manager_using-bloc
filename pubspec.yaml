@@ -33,6 +33,7 @@ dependencies:
   firebase_auth:
   connectivity:
   meet_network_image :
+  flushbar: ^1.5.0
 
   countdown:
   http:

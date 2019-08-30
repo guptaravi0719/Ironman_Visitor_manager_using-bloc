@@ -119,6 +119,21 @@ class _CouriersListState extends State<CouriersList> {
                                         Row(
                                           children: <Widget>[
                                             Text(
+                                              "No. of Guests:    ",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(snapshot.data.documents[i]
+                                            ['no_of_guests']),
+
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 5.0,
+                                        ),
+                                        Row(
+                                          children: <Widget>[
+                                            Text(
                                               "Mobile:    ",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold),
@@ -157,6 +172,10 @@ class _CouriersListState extends State<CouriersList> {
                                           size: 30,
                                         ),
                                         RaisedButton(
+                                          shape: new RoundedRectangleBorder(
+                                            borderRadius: new BorderRadius.circular(30.0),
+                                          ),
+                                          color: Theme.of(context).primaryColor,
                                           child: Text("EXIT"),
                                           onPressed: () {
                                             try {

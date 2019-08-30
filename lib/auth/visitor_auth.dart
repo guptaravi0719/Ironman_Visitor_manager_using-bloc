@@ -1,3 +1,4 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -142,21 +143,22 @@ class _LoginPageState extends State<LoginPage> {
                               FirebaseUser user;
 
                               if (_validateAndSave()) {
-                                Scaffold.of(context)
-                                  ..hideCurrentSnackBar()
-                                  ..showSnackBar(
-                                    SnackBar(
-                                      content: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text('Loading...'),
-                                          CircularProgressIndicator()
-                                        ],
-                                      ),
-                                      backgroundColor: Colors.black,
-                                    ),
-                                  );
+//                                Scaffold.of(context)
+//                                  ..hideCurrentSnackBar()
+//                                  ..showSnackBar(
+//                                    SnackBar(
+//                                      content: Row(
+//                                        mainAxisAlignment:
+//                                            MainAxisAlignment.spaceBetween,
+//                                        children: [
+//                                          Text('Loading...'),
+//                                          CircularProgressIndicator()
+//                                        ],
+//                                      ),
+//                                      backgroundColor: Colors.black,
+//                                    ),
+//                                  );
+                              showLoginFloatingFlushbar(context);
                                 try {
                                   setState(() {
                                     // loading = true;
@@ -171,21 +173,22 @@ class _LoginPageState extends State<LoginPage> {
                                   });
                                   print("error signing in The ERROR IS ${e}");
 
-                                  Scaffold.of(context)
-                                    ..hideCurrentSnackBar()
-                                    ..showSnackBar(
-                                      SnackBar(
-                                        content: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text('Login Failure'),
-                                            Icon(Icons.error)
-                                          ],
-                                        ),
-                                        backgroundColor: Colors.red,
-                                      ),
-                                    );
+//                                  Scaffold.of(context)
+//                                    ..hideCurrentSnackBar()
+//                                    ..showSnackBar(
+//                                      SnackBar(
+//                                        content: Row(
+//                                          mainAxisAlignment:
+//                                              MainAxisAlignment.spaceBetween,
+//                                          children: [
+//                                            Text('Login Failure'),
+//                                            Icon(Icons.error)
+//                                          ],
+//                                        ),
+//                                        backgroundColor: Colors.red,
+//                                      ),
+//                                    );
+                                showErrorFloatingFlushbar(context);
 
                                   // Find the Scaffold in the widget tree and use
                                   // it to show a SnackBar.
@@ -217,7 +220,72 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 )),
           );
-        }));
+        })
+
+    );
+  }
+  void showLoginFloatingFlushbar(BuildContext context) {
+    Flushbar(backgroundColor: Colors.orange,
+      margin: EdgeInsets.all(8),
+      showProgressIndicator: true,
+      duration: Duration(seconds: 4),
+      borderRadius: 5.0,
+      animationDuration: Duration(seconds: 2),
+
+      borderColor: Colors.blue,isDismissible: true,
+      padding: EdgeInsets.all(10.0),
+
+      backgroundGradient: LinearGradient(
+        colors: [Colors.orange[300], Colors.orange[200]],
+        stops: [0.6, 1],
+      ),
+      boxShadows: [
+        BoxShadow(
+          color: Colors.black45,
+          offset: Offset(3, 3),
+          blurRadius: 3,
+        ),
+      ],
+      // All of the previous Flushbars could be dismissed by swiping down
+      // now we want to swipe to the sides
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      // The default curve is Curves.easeOut
+      forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
+      title: 'Logging In..',
+      message: 'as visitor end',
+    ).show(context);
+  }
+  void showErrorFloatingFlushbar(BuildContext context) {
+    Flushbar(backgroundColor: Colors.orange,
+      icon:Icon(Icons.error),
+      margin: EdgeInsets.all(5.0),
+      borderRadius: 5.0,
+      duration: Duration(seconds: 4),
+      animationDuration: Duration(seconds: 2),
+
+      borderColor: Colors.white,isDismissible: true,
+//      padding: EdgeInsets.all(12.0),
+      flushbarStyle: FlushbarStyle.FLOATING,
+      backgroundGradient: LinearGradient(
+        colors: [Colors.red.shade400, Colors.redAccent.shade200],
+        stops: [0.6, 1],
+      ),
+      boxShadows: [
+        BoxShadow(
+          color: Colors.black45,
+          offset: Offset(3, 3),
+          blurRadius: 3,
+        ),
+      ],
+      messageText: Text("Enter correct credentials",style: TextStyle(color: Colors.white),),
+      // All of the previous Flushbars could be dismissed by swiping down
+      // now we want to swipe to the sides
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      // The default curve is Curves.easeOut
+      forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
+      title: 'Error Logging In..',
+      message: 'please try again',
+    ).show(context);
   }
 }
 

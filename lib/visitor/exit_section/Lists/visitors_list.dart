@@ -112,7 +112,23 @@ class _VisitorsListState extends State<VisitorsList> {
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             Text(snapshot.data.documents[i]
-                                                ['person_to_meet'])
+                                                ['person_to_meet']),
+
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 5.0,
+                                        ),
+                                        Row(
+                                          children: <Widget>[
+                                            Text(
+                                              "No. of Guests:    ",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(snapshot.data.documents[i]
+                                            ['no_of_guests']),
+
                                           ],
                                         ),
                                         SizedBox(
@@ -173,6 +189,11 @@ class _VisitorsListState extends State<VisitorsList> {
                                         //     borderColor: Colors.green,
                                         //     spacing: 0.0),
                                         RaisedButton(
+                                          shape: new RoundedRectangleBorder(
+                                            borderRadius: new BorderRadius.circular(30.0),
+                                          ),
+                                          color: Theme.of(context).primaryColor,
+
                                           child: Text("EXIT"),
                                           onPressed: () {
                                             try {
