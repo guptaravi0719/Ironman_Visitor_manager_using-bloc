@@ -2,6 +2,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:visitor_management/visitor/venue_screen.dart';
 import 'auth.dart';
 
@@ -21,8 +22,6 @@ class _LoginPageState extends State<LoginPage> {
     widget.auth = new Auth();
   }
 
-  bool loading = false;
-  bool snackbarlogin = false;
   BuildContext scaffoldContext;
   final formKey = new GlobalKey<FormState>();
   String _email;
@@ -45,32 +44,11 @@ class _LoginPageState extends State<LoginPage> {
       try {
         userId =
             await widget.auth.signInWithEmailAndPassword(_email, _password);
-//        user = await FirebaseAuth.instance
-//            .signInWithEmailAndPassword(email: _email, password: _password);
 
         widget.onSignedIn();
       } catch (e) {
-        setState(() {
-          snackbarlogin = true;
-        });
-        print("error signing in The ERROR IS ${e}");
+        //onError
 
-        // Find the Scaffold in the widget tree and use
-        // it to show a SnackBar.
-
-      }
-
-      if (userId != null) {
-        setState(() {
-          loading = false;
-        });
-//        Navigator.push(
-//          context,
-//          MaterialPageRoute(builder: (context) => VenueScreen()),
-//        );
-        print("SIGNED AS USER: ${user.uid}");
-      } else {
-        // print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
       }
     }
   }
@@ -83,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-        automaticallyImplyLeading: false,
+          automaticallyImplyLeading: false,
           title: Text("Login"),
         ),
         body: Builder(builder: (BuildContext context) {
@@ -93,7 +71,6 @@ class _LoginPageState extends State<LoginPage> {
             child: new Form(
                 key: formKey,
                 child: ListView(
-                  //  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     SizedBox(
                         height: MediaQuery.of(context).size.height / 3,
@@ -139,68 +116,22 @@ class _LoginPageState extends State<LoginPage> {
                                   color: Colors.white, fontSize: 20.0),
                             ),
                             onPressed: () async {
-                              //  validateAndSubmit();
-
                               FirebaseUser user;
 
                               if (_validateAndSave()) {
-//                                Scaffold.of(context)
-//                                  ..hideCurrentSnackBar()
-//                                  ..showSnackBar(
-//                                    SnackBar(
-//                                      content: Row(
-//                                        mainAxisAlignment:
-//                                            MainAxisAlignment.spaceBetween,
-//                                        children: [
-//                                          Text('Loading...'),
-//                                          CircularProgressIndicator()
-//                                        ],
-//                                      ),
-//                                      backgroundColor: Colors.black,
-//                                    ),
-//                                  );
-                              showLoginFloatingFlushbar(context);
+                                showLoginFloatingFlushbar(context);
                                 try {
-                                  setState(() {
-                                    // loading = true;
-                                  });
                                   user = await FirebaseAuth.instance
                                       .signInWithEmailAndPassword(
                                           email: _email, password: _password);
                                 } catch (e) {
-                                  setState(() {
-                                    // loading = false;
-                                    snackbarlogin = true;
-                                  });
                                   print("error signing in The ERROR IS ${e}");
 
-//                                  Scaffold.of(context)
-//                                    ..hideCurrentSnackBar()
-//                                    ..showSnackBar(
-//                                      SnackBar(
-//                                        content: Row(
-//                                          mainAxisAlignment:
-//                                              MainAxisAlignment.spaceBetween,
-//                                          children: [
-//                                            Text('Login Failure'),
-//                                            Icon(Icons.error)
-//                                          ],
-//                                        ),
-//                                        backgroundColor: Colors.red,
-//                                      ),
-//                                    );
-                                showErrorFloatingFlushbar(context);
-
-                                  // Find the Scaffold in the widget tree and use
-                                  // it to show a SnackBar.
-
+                                  showErrorFloatingFlushbar(context);
                                 }
 
                                 if (user != null) {
-                                  setState(() {
-                                    loading = false;
-                                  });
-
+                                  Navigator.pop(context);
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
@@ -210,9 +141,6 @@ class _LoginPageState extends State<LoginPage> {
                                             )),
                                   );
                                   print("SIGNED AS USER: ${user.uid}");
-                                } else {
-                                  print(
-                                      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                                 }
                               }
                             }),
@@ -221,19 +149,20 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 )),
           );
-        })
-
-    );
+        }));
   }
+
   void showLoginFloatingFlushbar(BuildContext context) {
-    Flushbar(backgroundColor: Colors.orange,
+    Flushbar(
+      backgroundColor: Colors.orange,
       margin: EdgeInsets.all(5),
       showProgressIndicator: true,
       duration: Duration(seconds: 4),
-progressIndicatorBackgroundColor: Colors.white,
+      progressIndicatorBackgroundColor: Colors.white,
       animationDuration: Duration(seconds: 2),
 
-      borderColor: Colors.white,isDismissible: true,
+      borderColor: Colors.white,
+      isDismissible: true,
       padding: EdgeInsets.all(10.0),
 
       backgroundGradient: LinearGradient(
@@ -256,16 +185,20 @@ progressIndicatorBackgroundColor: Colors.white,
       message: 'as visitor end',
     ).show(context);
   }
+
   void showErrorFloatingFlushbar(BuildContext context) {
-    Flushbar(backgroundColor: Colors.orange,
-      icon:Icon(Icons.error),
+    Flushbar(
+      backgroundColor: Colors.orange,
+      icon: Icon(Icons.error),
 
       margin: EdgeInsets.all(5.0),
+
       borderRadius: 5.0,
       duration: Duration(seconds: 4),
       animationDuration: Duration(seconds: 2),
 
-      borderColor: Colors.white,isDismissible: true,
+      borderColor: Colors.white,
+      isDismissible: true,
 //      padding: EdgeInsets.all(12.0),
       flushbarStyle: FlushbarStyle.FLOATING,
       backgroundGradient: LinearGradient(
@@ -279,7 +212,10 @@ progressIndicatorBackgroundColor: Colors.white,
           blurRadius: 3,
         ),
       ],
-      messageText: Text("Enter correct credentials",style: TextStyle(color: Colors.white),),
+      messageText: Text(
+        "Enter correct credentials",
+        style: TextStyle(color: Colors.white),
+      ),
       // All of the previous Flushbars could be dismissed by swiping down
       // now we want to swipe to the sides
       dismissDirection: FlushbarDismissDirection.HORIZONTAL,
@@ -290,4 +226,3 @@ progressIndicatorBackgroundColor: Colors.white,
     ).show(context);
   }
 }
-

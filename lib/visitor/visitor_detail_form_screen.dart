@@ -8,7 +8,9 @@ import 'package:visitor_management/visitor/welcome_screen.dart';
 
 class VisitorDetailForm extends StatefulWidget {
   String category;
+
   VisitorDetailForm({this.category});
+
   @override
   _VisitorDetailFormState createState() => _VisitorDetailFormState();
 }
@@ -19,6 +21,7 @@ class _VisitorDetailFormState extends State<VisitorDetailForm> {
   String _name;
   String _no_of_guests;
   String _person_to_meet;
+
   bool _validateAndSave() {
     final form = formKey.currentState;
     if (form.validate()) {
@@ -29,124 +32,120 @@ class _VisitorDetailFormState extends State<VisitorDetailForm> {
   }
 
   void _validateAndSubmit() async {
-
-    var now= new DateTime.now();
-
-
+    var now = new DateTime.now();
 
     if (_validateAndSave()) {
+      data_to_add['name'] = _name;
+      data_to_add['no_of_guests'] = _no_of_guests;
+      data_to_add['person_to_meet'] = _person_to_meet;
+      data_to_add['time'] = DateFormat("H:m:s").format(now);
+      try {
+        Firestore.instance
+            .collection(
+                '/locations/okhla/people/${DateFormat("dd-MM-yyyy").format(now)}/${widget.category}')
+            .add(data_to_add);
+        _showFloatingFlushbar(context);
 
-      data_to_add['name']=_name;
-      data_to_add['no_of_guests']=_no_of_guests;
-      data_to_add['person_to_meet']=_person_to_meet;
-      data_to_add['time']=DateFormat("H:m:s").format(now);
-try {
+          Navigator.pushReplacement(
+            context,
+            SlideRightRoute(widget: WelcomeScreen()),
+          );
 
-  Firestore.instance.collection(
-      '/locations/okhla/people/${DateFormat("dd-MM-yyyy").format(now)}/${widget
-          .category}').add(data_to_add);
-  _showFloatingFlushbar(context);
-Future.delayed(Duration(seconds: 1)).whenComplete((){
-  Navigator.pushReplacement(
-    context,
-    SlideRightRoute(widget:WelcomeScreen()),
-  );
-});
+      } catch (e) {
+        print("ERROR ON SAVING ON FIRESTORE");
+      }
+    }
+  }
 
-
-}
-catch(e){
-  print("ERROR ON SAVING ON FIRESTORE");
-
-}
-
-  }}
-onError(){
+  onError() {
     print("Error Dutnd CCCCCCCCCCCCRRRRRRRRRRRRRUUUUUUUUUDDDDDDDDDDDDD");
-
-}
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(key: _scaffoldKey,
-      appBar: AppBar(title: Text("Details"),),
-      body:
-      new Form(
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        title: Text("Details"),
+      ),
+      body: new Form(
           key: formKey,
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: ListView(
-
               children: <Widget>[
-Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-child:Image.asset("assets/person.png")
-
-  ,),
-
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  child: Image.asset("assets/person.png"),
+                ),
                 new TextFormField(
                   decoration: InputDecoration(
-                    border:  OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
                     labelText: "name",
                   ),
                   validator: (value) =>
-                  value.isEmpty ? "Please enter your name" : null,
+                      value.isEmpty ? "Please enter your name" : null,
                   onSaved: (value) => _name = value,
                 ),
-                SizedBox(height: 20.0,),
-                TextFormField(
-                  decoration: InputDecoration(labelText: "person  name",
-                    border:  OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-                  ),
-
-                  validator: (value) =>
-                  value.isEmpty ? "Enter the meeting person" : null,
-                  onSaved: (value) => _person_to_meet= value,
+                SizedBox(
+                  height: 20.0,
                 ),
-                SizedBox(height: 20.0,),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "person  name",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                  ),
+                  validator: (value) =>
+                      value.isEmpty ? "Enter the meeting person" : null,
+                  onSaved: (value) => _person_to_meet = value,
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(labelText: "No.of guests",
-                    border:  OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+                  decoration: InputDecoration(
+                    labelText: "No.of guests",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
                   ),
-
                   validator: (value) =>
-                  value.isEmpty ? "no. of guests can't be empty" : null,
-                  onSaved: (value) => _no_of_guests= value,
+                      value.isEmpty ? "no. of guests can't be empty" : null,
+                  onSaved: (value) => _no_of_guests = value,
                 ),
-
-                SizedBox(height: 30.0,),
-
+                SizedBox(
+                  height: 30.0,
+                ),
                 ButtonTheme(
                   height: 50.0,
                   child: RaisedButton(
                       shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0),
                       ),
-
-                      child: new Text("Submit", style: TextStyle(color: Colors.white,fontSize: 20.0),),
+                      child: new Text(
+                        "Submit",
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      ),
                       onPressed: () async {
 //                        if (_validateAndSave()) {
 //                          _showFloatingFlushbar(context);
 //
 //
 //                        }
-                         _validateAndSubmit();
-
-
-
-
+                        _validateAndSubmit();
                       }),
                 )
               ],
             ),
           )),
-
     );
   }
 
   void _showFloatingFlushbar(BuildContext context) {
-    Flushbar(backgroundColor: Colors.orange,
+    Flushbar(
+      backgroundColor: Colors.orange,
       margin: EdgeInsets.all(8),
       showProgressIndicator: true,
       duration: Duration(seconds: 4),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter/rendering.dart';
 import 'package:visitor_management/auth/auth.dart';
 import 'package:visitor_management/auth/visitor_auth.dart';
+import 'package:visitor_management/settings/location_settings.dart';
 import 'package:visitor_management/visitor/page_route.dart';
 import 'package:visitor_management/visitor/visitor_category_select_screen.dart';
 
@@ -20,6 +21,9 @@ class VenueScreen extends StatelessWidget {
     return Scaffold(
         key: GlobalKey(),
         appBar: AppBar(
+          actions: <Widget>[
+            IconButton(icon: Icon(Icons.location_on,color: Colors.white,), onPressed:()=>Navigator.push(context, SlideRightRoute(widget: LocationSettings())))
+          ],
           automaticallyImplyLeading: false,
           title: Text(
             "Venue Login",

@@ -269,6 +269,6 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
 
     data_to_add['url'] = url;
 
-//    url = ""; //make url null after one call
+   url = ""; //make url null after one call
   }
 }
