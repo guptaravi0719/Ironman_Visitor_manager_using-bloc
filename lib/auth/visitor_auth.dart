@@ -227,10 +227,10 @@ class _LoginPageState extends State<LoginPage> {
   }
   void showLoginFloatingFlushbar(BuildContext context) {
     Flushbar(backgroundColor: Colors.orange,
-      margin: EdgeInsets.all(8),
+      margin: EdgeInsets.all(5),
       showProgressIndicator: true,
       duration: Duration(seconds: 4),
-      borderRadius: 5.0,
+progressIndicatorBackgroundColor: Colors.white,
       animationDuration: Duration(seconds: 2),
 
       borderColor: Colors.white,isDismissible: true,
@@ -259,6 +259,7 @@ class _LoginPageState extends State<LoginPage> {
   void showErrorFloatingFlushbar(BuildContext context) {
     Flushbar(backgroundColor: Colors.orange,
       icon:Icon(Icons.error),
+
       margin: EdgeInsets.all(5.0),
       borderRadius: 5.0,
       duration: Duration(seconds: 4),

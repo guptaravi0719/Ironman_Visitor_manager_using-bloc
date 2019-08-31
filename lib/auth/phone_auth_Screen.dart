@@ -264,10 +264,11 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
       // }
     } catch (e) {}
     var dowurl = await (await uploadTask.onComplete).ref.getDownloadURL();
-    String url = dowurl.toString();
+    String url="";
+    url =dowurl.toString();
 
     data_to_add['url'] = url;
 
-    url = ""; //make url null after one call
+//    url = ""; //make url null after one call
   }
 }

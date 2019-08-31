@@ -24,27 +24,34 @@ class _ExitScreenTabsState extends State<ExitScreenTabs> {
             style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
-          bottom: TabBar(
-            tabs: [
-              Tab(
-                child: Text("Visitor"),
-              ),
-              Tab(
-                child: Text("Vendors"),
-              ),
+          bottom: PreferredSize(
+              preferredSize: Size.fromHeight(30.0),
+            child: TabBar(
 
-              Tab(
-                child: Text("91 Lead"),
-              ),
-              Tab(
-                child: Text("Couriers"),
-              ),
+              unselectedLabelColor: Colors.white.withOpacity(0.3),
+              indicatorColor: Colors.white,
+              isScrollable: true,
+              tabs: [
+                Tab(
+                  child: Text("Visitor"),
+                ),
+                Tab(
+                  child: Text("Vendors"),
+                ),
 
-              Tab(
-                child: Text("DayPass"),
-              ),
-              //   Tab(child: Text("All"),),
-            ],
+                Tab(
+                  child: Text("91 Lead"),
+                ),
+                Tab(
+                  child: Text("Couriers"),
+                ),
+
+                Tab(
+                  child: Text("DayPass"),
+                ),
+                //   Tab(child: Text("All"),),
+              ],
+            ),
           ),
         ),
         body: TabBarView(

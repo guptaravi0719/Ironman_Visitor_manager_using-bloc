@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter/rendering.dart';
 import 'package:visitor_management/auth/auth.dart';
 import 'package:visitor_management/auth/visitor_auth.dart';
@@ -90,12 +91,12 @@ Future.delayed(Duration(seconds: 2)).whenComplete((){
 //         widget:
 //         LoginPage(auth: auth, onSignedIn: onsignedIn),
 //       ));
-  onPressed: () {
+
+Navigator.pop(context);
   Navigator.pushReplacement(
     context,
     MaterialPageRoute(builder: (context) => LoginPage(auth: auth, onSignedIn: onsignedIn)),
   );
-}
 
 });
 
@@ -131,11 +132,11 @@ Future.delayed(Duration(seconds: 2)).whenComplete((){
   }
   void _showSignOutFloatingFlushbar(BuildContext context) {
     Flushbar(backgroundColor: Colors.orange,
-      margin: EdgeInsets.all(8),
+      margin: EdgeInsets.all(0),
       showProgressIndicator: true,
       duration: Duration(seconds: 4),
       borderRadius: 5.0,
-      animationDuration: Duration(seconds: 2),
+      //animationDuration: Duration(seconds: 2),
 isDismissible: true,
       padding: EdgeInsets.all(8.0),
 
