@@ -84,12 +84,18 @@ class VenueScreen extends StatelessWidget {
                       try {
                         await FirebaseAuth.instance.signOut();
 Future.delayed(Duration(seconds: 2)).whenComplete((){
+//   Navigator.pushReplacement(
+//       context,
+//       SlideRightRoute(
+//         widget:
+//         LoginPage(auth: auth, onSignedIn: onsignedIn),
+//       ));
+  onPressed: () {
   Navigator.pushReplacement(
-      context,
-      SlideRightRoute(
-        widget:
-        LoginPage(auth: auth, onSignedIn: onsignedIn),
-      ));
+    context,
+    MaterialPageRoute(builder: (context) => LoginPage(auth: auth, onSignedIn: onsignedIn)),
+  );
+}
 
 });
 
