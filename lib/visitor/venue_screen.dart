@@ -120,10 +120,12 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                         borderRadius: new BorderRadius.circular(30.0),
                       ),
                       onPressed: () async {
+
                         _showSignOutFloatingFlushbar(context);
                         try {
+
                           await FirebaseAuth.instance.signOut();
-                          Future.delayed(Duration(seconds: 2)).whenComplete(() {
+                          Future.delayed(Duration(seconds: 2)).whenComplete(() async {
 //   Navigator.pushReplacement(
 //       context,
 //       SlideRightRoute(
@@ -139,6 +141,7 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                                       auth: widget.auth,
                                       onSignedIn: widget.onsignedIn)),
                             );
+
                           });
                         } catch (e) {
                           _showErrorFloatingFlushbar(
@@ -193,6 +196,7 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                           Text(
                             'Change location',
                             style: TextStyle(
+
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 20.0),
                           ),
@@ -216,7 +220,7 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                     child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text("Current Location: "),
+                    Text("Current Location: ",style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold),),
                     location == null
                         ? Text(
                             "No Location Selected",

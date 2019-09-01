@@ -23,6 +23,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             height: MediaQuery.of(context).size.height / 3,
             width: MediaQuery.of(context).size.height / 2,
           ),
+          SizedBox(height: 20.0,),
           Center(
             child: Text(
               "WELCOME",
