@@ -212,7 +212,19 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   }
 
   void _offlineMode() {
-    data_to_add['phone no'] = phoneNo;
+//                         image is uploadng in offline mode , but needed to fetchurl  which will be in new version release
+//    try {
+//      uploadImage();
+//      print("EXEDSKFLJDLGDLDLNSBNSDJKBNDJKNBKDJNBJDKBKJ");
+//    } catch (e) {
+//      print(e);
+//      print("ERRRORROOROORRORORORORORORO");
+//    }
+
+
+    data_to_add['phone no'
+
+    ] = phoneNo;
     Navigator.push(
         context,
         SlideRightRoute(
@@ -269,6 +281,6 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
 
     data_to_add['url'] = url;
 
-   url = ""; //make url null after one call
+   url = "" ; //make url null after one call
   }
 }

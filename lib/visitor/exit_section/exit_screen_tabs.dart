@@ -33,21 +33,21 @@ class _ExitScreenTabsState extends State<ExitScreenTabs> {
               isScrollable: true,
               tabs: [
                 Tab(
-                  child: Text("Visitor"),
+                  child: Text("Visitor",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20.0),),
                 ),
                 Tab(
-                  child: Text("Vendors"),
-                ),
-
-                Tab(
-                  child: Text("91 Lead"),
-                ),
-                Tab(
-                  child: Text("Couriers"),
+                  child: Text("Vendors",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20.0),),
                 ),
 
                 Tab(
-                  child: Text("DayPass"),
+                  child: Text("91 Lead",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20.0),),
+                ),
+                Tab(
+                  child: Text("Couriers",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20.0),),
+                ),
+
+                Tab(
+                  child: Text("DayPass",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20.0),),
                 ),
                 //   Tab(child: Text("All"),),
               ],

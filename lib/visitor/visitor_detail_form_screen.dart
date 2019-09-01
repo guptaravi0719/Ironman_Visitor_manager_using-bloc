@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:visitor_management/data_to_be_added';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:visitor_management/settings/location.dart';
 import 'package:visitor_management/visitor/page_route.dart';
 import 'package:visitor_management/visitor/welcome_screen.dart';
 
@@ -42,14 +43,16 @@ class _VisitorDetailFormState extends State<VisitorDetailForm> {
       try {
         Firestore.instance
             .collection(
-                '/locations/okhla/people/${DateFormat("dd-MM-yyyy").format(now)}/${widget.category}')
+                '/locations/$location/people/${DateFormat("dd-MM-yyyy").format(now)}/${widget.category}')
             .add(data_to_add);
         _showFloatingFlushbar(context);
 
           Navigator.pushReplacement(
             context,
             SlideRightRoute(widget: WelcomeScreen()),
+
           );
+          data_to_add.clear();
 
       } catch (e) {
         print("ERROR ON SAVING ON FIRESTORE");

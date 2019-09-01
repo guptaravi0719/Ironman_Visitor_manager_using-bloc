@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:meet_network_image/meet_network_image.dart';
 import 'package:rating_bar/rating_bar.dart';
+import 'package:visitor_management/settings/location.dart';
 
 class LeadList extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class _LeadListState extends State<LeadList> {
   void initState() {
     _stream = Firestore.instance
         .collection(
-            "locations/okhla/people/${DateFormat("dd-MM-yyyy").format(now)}/91Lead")
+            "locations/$location/people/${DateFormat("dd-MM-yyyy").format(now)}/91Lead")
         .snapshots();
     super.initState();
   }
@@ -60,14 +61,12 @@ class _LeadListState extends State<LeadList> {
                                       imageUrl: snapshot.data.documents[i]
                                                   ['url'] ==
                                               null
-                                          ? "https://random.dog/3f62f2c1-e0cb-4077-8cd9-1ca76bfe98d5.jpg"
+                                          ? "http://mobileinternationalfestival.org/wp-content/uploads/2017/07/dummy-man-570x570.png"
                                           : snapshot.data.documents[i]['url'],
                                       loadingBuilder: (context) => Center(
-                                        child: CircularProgressIndicator(),
-                                      ),
+                                        child: Icon(Icons.person,size: 30.0,),                                      ),
                                       errorBuilder: (context, e) => Center(
-                                        child: Text('Error appear!'),
-                                      ),
+                                        child: Image.asset('assets/person_dummy.png'),                                      ),
                                     ),
                                     height:
                                         MediaQuery.of(context).size.height / 4 -
@@ -161,8 +160,8 @@ class _LeadListState extends State<LeadList> {
                                           emptyIcon: Icons.star_border,
                                           halfFilledIcon: Icons.star_half,
                                           isHalfAllowed: true,
-                                          filledColor: Colors.green,
-                                          emptyColor: Colors.redAccent,
+                                          filledColor:Theme.of(context).primaryColor,
+                                          emptyColor: Theme.of(context).primaryColor,
                                           halfFilledColor: Colors.amberAccent,
                                           size: 30,
                                         ),
@@ -172,12 +171,12 @@ class _LeadListState extends State<LeadList> {
                                           ),
                                           color: Theme.of(context).primaryColor,
 
-                                          child: Text("EXIT"),
+                                          child: Text("EXIT",style: TextStyle(color: Colors.white),),
                                           onPressed: () {
                                             try {
                                               Firestore.instance
                                                   .collection(
-                                                      'locations/okhla/people/${DateFormat("dd-MM-yyyy").format(now)}/91Lead')
+                                                      'locations/$location/people/${DateFormat("dd-MM-yyyy").format(now)}/91Lead')
                                                   .document(snapshot.data
                                                       .documents[i].documentID)
                                                   .updateData({

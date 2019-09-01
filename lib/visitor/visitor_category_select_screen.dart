@@ -175,15 +175,15 @@ class _VisitorCategorySelectScreenState
             ),
             Container(
               height: 50.0,
-              child: RaisedButton(
-                color: Colors.blue,
-
+              child: OutlineButton(
+highlightedBorderColor: Theme.of(context).primaryColor,
+                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0),
                   ),
                   child: Text(
                     "Exit Timings",
-                    style: TextStyle(color: Colors.white, fontSize: 25.0),
+                    style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 25.0),
                   ),
                   onPressed: () {
                     Navigator.push(
