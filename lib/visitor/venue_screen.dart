@@ -27,19 +27,19 @@ class VenueScreen extends StatefulWidget {
 class _VenueScreenState extends State<VenueScreen> {
   @override
   void initState() {
-//    futureLocation();
+  futureLocation();
     // TODO: implement initState
     super.initState();
   }
+
   @override
   void dispose() {
-
     // TODO: implement dispose
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         key: GlobalKey(),
         appBar: AppBar(
@@ -113,19 +113,19 @@ class _VenueScreenState extends State<VenueScreen> {
                     minWidth: 100,
                     height: 50.0,
                     child: OutlineButton(
-highlightedBorderColor: Theme.of(context).primaryColor,
-                      borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                      highlightedBorderColor: Theme.of(context).primaryColor,
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor),
                       disabledBorderColor: Theme.of(context).primaryColor,
                       shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0),
                       ),
                       onPressed: () async {
-
                         _showSignOutFloatingFlushbar(context);
                         try {
-
                           await FirebaseAuth.instance.signOut();
-                          Future.delayed(Duration(seconds: 2)).whenComplete(() async {
+                          Future.delayed(Duration(seconds: 2))
+                              .whenComplete(() async {
 //   Navigator.pushReplacement(
 //       context,
 //       SlideRightRoute(
@@ -141,7 +141,6 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                                       auth: widget.auth,
                                       onSignedIn: widget.onsignedIn)),
                             );
-
                           });
                         } catch (e) {
                           _showErrorFloatingFlushbar(
@@ -155,15 +154,16 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                         children: <Widget>[
                           Text(
                             "Sign Out",
-                            style:
-                                TextStyle(color: Theme.of(context).primaryColor, fontSize:20.0),
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 20.0),
                           ),
                           SizedBox(
                             width: 20.0,
                           ),
                           Icon(
                             Icons.exit_to_app,
-                            color:Theme.of(context).primaryColor,
+                            color: Theme.of(context).primaryColor,
                             size: 20.0,
                           ),
                         ],
@@ -179,7 +179,9 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                   child: ButtonTheme(
                     minWidth: 100,
                     height: 50.0,
-                    child: OutlineButton( borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                    child: OutlineButton(
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor),
                       splashColor: Colors.blue[100],
                       disabledBorderColor: Colors.blue,
                       highlightedBorderColor: Colors.blue,
@@ -196,7 +198,6 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                           Text(
                             'Change location',
                             style: TextStyle(
-
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 20.0),
                           ),
@@ -220,7 +221,11 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                     child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text("Current Location: ",style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold),),
+                    Text(
+                      "Current Location: ",
+                      style: TextStyle(
+                          color: Colors.grey, fontWeight: FontWeight.bold),
+                    ),
                     location == null
                         ? Text(
                             "No Location Selected",
@@ -228,8 +233,8 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold),
                           )
-                        :  Text(
-                           location,
+                        : Text(
+                            location,
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold),
@@ -318,8 +323,14 @@ highlightedBorderColor: Theme.of(context).primaryColor,
         context: context,
         builder: (context) {
           return CupertinoActionSheet(
-            title: Text("Locations",style: TextStyle(fontWeight: FontWeight.bold),),
-            message: Text("Please select location from list below",style: TextStyle(fontWeight: FontWeight.bold),),
+            title: Text(
+              "Locations",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            message: Text(
+              "Please select location from list below",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             cancelButton: CupertinoActionSheetAction(
               onPressed: () {
                 Navigator.pop(context);
@@ -328,11 +339,15 @@ highlightedBorderColor: Theme.of(context).primaryColor,
             ),
             actions: <Widget>[
               CupertinoActionSheetAction(
-                child: Text("Okhla",style: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),),
+                child: Text(
+                  "Okhla",
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold),
+                ),
                 onPressed: () {
-
                   addStringToSF("okhla");
-                  futureLocation();     //setting location from Shared Prefrences because it was future
+                  futureLocation(); //setting location from Shared Prefrences because it was future
 //                  setState(() {
 //                    location = 'okhla';
 //                  });
@@ -340,7 +355,12 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                 },
               ),
               CupertinoActionSheetAction(
-                child: Text("Jhandewalan",style: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),),
+                child: Text(
+                  "Jhandewalan",
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold),
+                ),
                 onPressed: () {
                   addStringToSF("jhandewalan");
                   futureLocation();
@@ -351,7 +371,12 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                 },
               ),
               CupertinoActionSheetAction(
-                child: Text("Noida Sector-63",style: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),),
+                child: Text(
+                  "Noida Sector-63",
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold),
+                ),
                 onPressed: () {
                   addStringToSF("noida-sec-63");
                   futureLocation();
@@ -362,9 +387,13 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                 },
               ),
               CupertinoActionSheetAction(
-                child: Text("Noida Sector-1",style: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),),
+                child: Text(
+                  "Noida Sector-1",
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold),
+                ),
                 onPressed: () {
-
                   addStringToSF("noida-sec-1");
                   futureLocation();
 //                  setState(() {
@@ -374,7 +403,12 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                 },
               ),
               CupertinoActionSheetAction(
-                child: Text("Noida Sector-2",style: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),),
+                child: Text(
+                  "Noida Sector-2",
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold),
+                ),
                 onPressed: () {
                   addStringToSF("noida-sec-2");
                   futureLocation();
@@ -385,7 +419,12 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                 },
               ),
               CupertinoActionSheetAction(
-                child: Text("Nehru Place",style: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),),
+                child: Text(
+                  "Nehru Place",
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold),
+                ),
                 onPressed: () {
                   addStringToSF("nehru-place");
                   futureLocation();
@@ -396,7 +435,12 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                 },
               ),
               CupertinoActionSheetAction(
-                child: Text("Mohan Estate",style: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),),
+                child: Text(
+                  "Mohan Estate",
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold),
+                ),
                 onPressed: () {
                   addStringToSF("mohan-estate");
                   futureLocation();
@@ -407,7 +451,12 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                 },
               ),
               CupertinoActionSheetAction(
-                child: Text("Gurgaon Sector-18",style: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),),
+                child: Text(
+                  "Gurgaon Sector-18",
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold),
+                ),
                 onPressed: () {
                   addStringToSF("gurugaon-sec-18");
                   futureLocation();
@@ -418,7 +467,12 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                 },
               ),
               CupertinoActionSheetAction(
-                child: Text("Gurgaon Sector-44",style: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),),
+                child: Text(
+                  "Gurgaon Sector-44",
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold),
+                ),
                 onPressed: () {
                   addStringToSF("gurugaon-sec-44");
                   futureLocation();
@@ -429,7 +483,12 @@ highlightedBorderColor: Theme.of(context).primaryColor,
                 },
               ),
               CupertinoActionSheetAction(
-                child: Text("Udyog Vihar",style: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),),
+                child: Text(
+                  "Udyog Vihar",
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold),
+                ),
                 onPressed: () {
                   addStringToSF("udyog-vihar");
                   futureLocation();
@@ -444,13 +503,11 @@ highlightedBorderColor: Theme.of(context).primaryColor,
         });
   }
 
-  futureLocation(){
-    getValuesSF().then((value){
-setState(() {
-
-  location=value;
-});
-
+  futureLocation() {
+    getValuesSF().then((value) {
+      setState(() {
+        location = value;
+      });
     });
   }
 }
