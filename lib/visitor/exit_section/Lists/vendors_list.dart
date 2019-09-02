@@ -14,6 +14,7 @@ class _VendorsListState extends State<VendorsList> {
   var _stream;
   DocumentSnapshot _currentDocument;
   final db = Firestore.instance;
+
   @override
   void initState() {
     _stream = Firestore.instance
@@ -25,6 +26,7 @@ class _VendorsListState extends State<VendorsList> {
 
 //  List _visitorList=List();
   var now = new DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     double _rating = 0.0;
@@ -43,7 +45,9 @@ class _VendorsListState extends State<VendorsList> {
 //                _visitorList.add(snapshot.data.documents[ind]);
 //
 //            }
+
             return ListView.builder(
+                reverse: true,
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (BuildContext context, int i) {
                   return snapshot.data.documents[i]['exit'] == null
@@ -65,7 +69,9 @@ class _VendorsListState extends State<VendorsList> {
                                         child: CircularProgressIndicator(),
                                       ),
                                       errorBuilder: (context, e) => Center(
-                                        child: Image.asset('assets/person_dummy.png'),                                      ),
+                                        child: Image.asset(
+                                            'assets/person_dummy.png'),
+                                      ),
                                     ),
                                     height:
                                         MediaQuery.of(context).size.height / 4 -
@@ -117,8 +123,7 @@ class _VendorsListState extends State<VendorsList> {
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             Text(snapshot.data.documents[i]
-                                            ['no_of_guests']),
-
+                                                ['no_of_guests']),
                                           ],
                                         ),
                                         SizedBox(
@@ -159,18 +164,24 @@ class _VendorsListState extends State<VendorsList> {
                                           emptyIcon: Icons.star_border,
                                           halfFilledIcon: Icons.star_half,
                                           isHalfAllowed: true,
-                                          filledColor:Theme.of(context).primaryColor,
-                                          emptyColor: Theme.of(context).primaryColor,
+                                          filledColor:
+                                              Theme.of(context).primaryColor,
+                                          emptyColor:
+                                              Theme.of(context).primaryColor,
                                           halfFilledColor: Colors.amberAccent,
                                           size: 30,
                                         ),
                                         RaisedButton(
                                           shape: new RoundedRectangleBorder(
-                                            borderRadius: new BorderRadius.circular(30.0),
+                                            borderRadius:
+                                                new BorderRadius.circular(30.0),
                                           ),
                                           color: Theme.of(context).primaryColor,
-
-                                          child: Text("EXIT",style: TextStyle(color: Colors.white),),
+                                          child: Text(
+                                            "EXIT",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
                                           onPressed: () {
                                             try {
                                               Firestore.instance

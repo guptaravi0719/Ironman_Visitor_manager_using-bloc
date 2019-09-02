@@ -44,6 +44,7 @@ class _CouriersListState extends State<CouriersList> {
 //
 //            }
             return ListView.builder(
+                reverse: true,
 //              itemCount: snapshot.data.documents.length,
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (BuildContext context, int i) {

@@ -36,8 +36,9 @@ class _VisitorDetailFormState extends State<VisitorDetailForm> {
     var now = new DateTime.now();
 
     if (_validateAndSave()) {
+      var no_of_guests=_no_of_guests!=null?"0":_no_of_guests;
       data_to_add['name'] = _name;
-      data_to_add['no_of_guests'] = _no_of_guests;
+      data_to_add['no_of_guests'] = no_of_guests;   //if no entry rhen pushing 0
       data_to_add['person_to_meet'] = _person_to_meet;
       data_to_add['time'] = DateFormat("H:m:s").format(now);
       try {
@@ -82,40 +83,43 @@ class _VisitorDetailFormState extends State<VisitorDetailForm> {
                   child: Image.asset("assets/person.png"),
                 ),
                 new TextFormField(
+                  textCapitalization: TextCapitalization.sentences,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0)),
-                    labelText: "name",
+                    labelText: "Name",
                   ),
                   validator: (value) =>
-                      value.isEmpty ? "Please enter your name" : null,
+                      value.isEmpty ? "Please enter your Name" : null,
                   onSaved: (value) => _name = value,
                 ),
                 SizedBox(
                   height: 20.0,
                 ),
                 TextFormField(
+                  textCapitalization: TextCapitalization.sentences,
                   decoration: InputDecoration(
-                    labelText: "person  name",
+                    labelText: "Host Name",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0)),
                   ),
                   validator: (value) =>
-                      value.isEmpty ? "Enter the meeting person" : null,
+                      value.isEmpty ? "Host name can't be empty" : null,
                   onSaved: (value) => _person_to_meet = value,
                 ),
                 SizedBox(
                   height: 20.0,
                 ),
                 TextFormField(
+                //  textCapitalization: TextCapitalization.sentences,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    labelText: "No.of guests",
+                    labelText:"No.of guests",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0)),
                   ),
-                  validator: (value) =>
-                      value.isEmpty ? "no. of guests can't be empty" : null,
+//                  validator: (value) =>
+//                      value.isEmpty ? "no. of guests can't be empty" : null,
                   onSaved: (value) => _no_of_guests = value,
                 ),
                 SizedBox(
@@ -123,22 +127,27 @@ class _VisitorDetailFormState extends State<VisitorDetailForm> {
                 ),
                 ButtonTheme(
                   height: 50.0,
-                  child: RaisedButton(
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
-                      child: new Text(
-                        "Submit",
-                        style: TextStyle(color: Colors.white, fontSize: 20.0),
-                      ),
-                      onPressed: () async {
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10,0,10,30),
+                    child: RaisedButton(
+                      color: Theme.of(context).primaryColor,
+                     // borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0),
+                        ),
+                        child: new Text(
+                          "Submit",
+                          style: TextStyle(color: Colors.white, fontSize: 20.0),
+                        ),
+                        onPressed: () async {
 //                        if (_validateAndSave()) {
 //                          _showFloatingFlushbar(context);
 //
 //
 //                        }
-                        _validateAndSubmit();
-                      }),
+                          _validateAndSubmit();
+                        }),
+                  ),
                 )
               ],
             ),
