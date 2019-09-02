@@ -179,12 +179,20 @@ class _LoginPageState extends State<LoginPage> {
                                   color: Colors.white, fontSize: 20.0),
                             ),
                             onPressed: () async {
+                              if(adminVal==false&&visitorVal==false){
+                                showErrorFloatingFlushbar(context,"Login Type Required","Please select at least one Admin or Visitor");
+
+                              }
+
                               if (visitorVal == true) {
                                 _signInAsVisitor();
                               }
                               if (adminVal == true) {
                                 _signInAsAdmin();
                               }
+
+
+
                             }),
                       ),
                     )
@@ -205,7 +213,7 @@ class _LoginPageState extends State<LoginPage> {
       } catch (e) {
         print("error signing in The ERROR IS ${e}");
 
-        showErrorFloatingFlushbar(context);
+        showErrorFloatingFlushbar(context,"Error Signing In","Invalid Username/Password or Check Connectivity");
       }
 
       if (user != null) {
@@ -234,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
       } catch (e) {
         print("error signing in The ERROR IS ${e}");
 
-        showErrorFloatingFlushbar(context);
+        showErrorFloatingFlushbar(context,"Error Signing In","Invalid Username/Password or Check Connectivity");
       }
 
       if (user != null) {
@@ -281,7 +289,7 @@ class _LoginPageState extends State<LoginPage> {
     ).show(context);
   }
 
-  void showErrorFloatingFlushbar(BuildContext context) {
+  void showErrorFloatingFlushbar(BuildContext context,String title ,String message) {
     Flushbar(
       backgroundColor: Colors.orange,
       icon: Icon(Icons.error),
@@ -308,7 +316,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ],
       messageText: Text(
-        "Enter correct credentials",
+        "$message",
         style: TextStyle(color: Colors.white),
       ),
       // All of the previous Flushbars could be dismissed by swiping down
@@ -316,8 +324,8 @@ class _LoginPageState extends State<LoginPage> {
       dismissDirection: FlushbarDismissDirection.HORIZONTAL,
       // The default curve is Curves.easeOut
       forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
-      title: 'Error Logging In..',
-      message: 'please try again',
+      title: title,
+      message: message,
     ).show(context);
   }
 }

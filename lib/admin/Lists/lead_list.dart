@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart' as prefix0;
 import 'package:intl/intl.dart';
 import 'package:meet_network_image/meet_network_image.dart';
+import 'package:visitor_management/data_to_be_added';
+
+// import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:visitor_management/settings/location.dart';
 
@@ -18,7 +22,7 @@ class _LeadListState extends State<LeadList> {
   void initState() {
     _stream = Firestore.instance
         .collection(
-            "locations/$location/people/${DateFormat("dd-MM-yyyy").format(now)}/91Lead")
+        "locations/$location/people/${DateFormat("dd-MM-yyyy").format(now)}/91Lead")
         .snapshots();
     super.initState();
   }
@@ -28,7 +32,6 @@ class _LeadListState extends State<LeadList> {
   @override
   Widget build(BuildContext context) {
     double _rating = 0.0;
-
     return Scaffold(
       body: StreamBuilder(
         stream: _stream,
@@ -45,161 +48,169 @@ class _LeadListState extends State<LeadList> {
 //
 //            }
             return ListView.builder(
+
 //              itemCount: snapshot.data.documents.length,
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (BuildContext context, int i) {
-                  return snapshot.data.documents[i]['exit'] == null
-                      ? Container(
-                          height: MediaQuery.of(context).size.height / 3,
-                          child: Card(
-                            child: Padding(
+                  //    String url="https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png";
+//                  if(snapshot.data.documents[i]['url']!=null?true:false){
+//                   url=snapshot.data.documents[i]['url'];
+//                  }
+                  return Container(
+                    height: MediaQuery.of(context).size.height / 3,
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: <Widget>[
+                            SizedBox(
+                              child: MeetNetworkImage(
+                                imageUrl: snapshot.data.documents[i]
+                                ['url'] ==
+                                    null
+                                    ? "http://mobileinternationalfestival.org/wp-content/uploads/2017/07/dummy-man-570x570.png"
+                                    : snapshot.data.documents[i]['url'],
+                                loadingBuilder: (context) => Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                                errorBuilder: (context, e) => Center(
+                                  child: Image.asset('assets/person_dummy.png'),                                      ),
+                              ),
+                              //Image.network(snapshot.data.documents[i]['url']),
+                              height:
+                              MediaQuery.of(context).size.height / 4 -
+                                  30,
+                              width:
+                              MediaQuery.of(context).size.width / 4,
+                            ),
+                            Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Row(
+                              child: Column(
+                                key: UniqueKey(),
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  SizedBox(
-                                    child: MeetNetworkImage(
-                                      imageUrl: snapshot.data.documents[i]
-                                                  ['url'] ==
-                                              null
-                                          ? "http://mobileinternationalfestival.org/wp-content/uploads/2017/07/dummy-man-570x570.png"
-                                          : snapshot.data.documents[i]['url'],
-                                      loadingBuilder: (context) => Center(
-                                        child: Icon(Icons.person,size: 30.0,),                                      ),
-                                      errorBuilder: (context, e) => Center(
-                                        child: Image.asset('assets/person_dummy.png'),                                      ),
-                                    ),
-                                    height:
-                                        MediaQuery.of(context).size.height / 4 -
-                                            30,
-                                    width:
-                                        MediaQuery.of(context).size.width / 4,
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Name:    ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(snapshot.data.documents[i]
+                                      ['name'])
+                                    ],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      key: UniqueKey(),
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Text(
-                                              "Name:    ",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(snapshot.data.documents[i]
-                                                ['name'])
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 5.0,
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Text(
-                                              "meeting to:    ",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(snapshot.data.documents[i]
-                                                ['person_to_meet'])
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 5.0,
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Text(
-                                              "No. of Guests:    ",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(snapshot.data.documents[i]
-                                            ['no_of_guests']),
+                                  SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "meeting to:    ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(snapshot.data.documents[i]
+                                      ['person_to_meet']),
 
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 5.0,
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Text(
-                                              "Mobile:    ",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(snapshot.data.documents[i]
-                                                ['phone no'])
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 5.0,
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Text(
-                                              "Time:    ",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(snapshot.data.documents[i]
-                                                ['time'])
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 5.0,
-                                        ),
-                                        RatingBar(
-                                          onRatingChanged: (rating) =>
-                                              _rating = rating,
-                                          filledIcon: Icons.star,
-                                          emptyIcon: Icons.star_border,
-                                          halfFilledIcon: Icons.star_half,
-                                          isHalfAllowed: true,
-                                          filledColor:Theme.of(context).primaryColor,
-                                          emptyColor: Theme.of(context).primaryColor,
-                                          halfFilledColor: Colors.amberAccent,
-                                          size: 30,
-                                        ),
-                                        RaisedButton(
-                                          shape: new RoundedRectangleBorder(
-                                            borderRadius: new BorderRadius.circular(30.0),
-                                          ),
-                                          color: Theme.of(context).primaryColor,
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "No. of Guests:    ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(snapshot.data.documents[i]
+                                      ['no_of_guests']),
 
-                                          child: Text("EXIT",style: TextStyle(color: Colors.white),),
-                                          onPressed: () {
-                                            try {
-                                              Firestore.instance
-                                                  .collection(
-                                                      'locations/$location/people/${DateFormat("dd-MM-yyyy").format(now)}/91Lead')
-                                                  .document(snapshot.data
-                                                      .documents[i].documentID)
-                                                  .updateData({
-                                                'exit':
-                                                    '${DateFormat("H:m:s").format(now)}',
-                                                'rating': '$_rating'
-                                              });
-                                            } catch (e) {
-                                              print(
-                                                  "ERROR UPDATING\n ERROR UPDATING");
-                                            }
-//db.collection("locations/okhla/people/${DateFormat("dd-MM-yyyy").format(now)}/Vendor").document('${snapshot.data.documents[i]}');
-                                          },
-                                        )
-                                      ],
-                                    ),
-                                  )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Mobile:    ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(snapshot.data.documents[i]
+                                      ['phone no'])
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Time:    ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(snapshot.data.documents[i]
+                                      ['time'])
+                                    ],
+                                  ),
+
+                                  SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Exit Time: ",style:TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                      ),
+                                      snapshot.data.documents[i]['exit']==null?Text("Not exited yet!"):
+                                      Text(snapshot.data.documents[i]
+                                      ['time'])
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Rating: ",style:TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                      ),
+                                      snapshot.data.documents[i]['exit']==null?Text("No Ratings "):
+                                      Text(snapshot.data.documents[i]
+                                      ['rating'])
+                                    ],
+                                  ),
+
+                                  // SmoothStarRating(
+                                  //     allowHalfRating: false,
+                                  //     onRatingChanged: (v) {
+                                  //       rating = v;
+                                  //       // setState(() {});
+                                  //     },
+                                  //     starCount: 5,
+                                  //     rating: rating,
+                                  //     size: 20.0,
+                                  //     color: Colors.green,
+                                  //     borderColor: Colors.green,
+                                  //     spacing: 0.0),
+
                                 ],
                               ),
-                            ),
-                          ),
-                        )
-                      : Container();
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+
                 });
           }
         },
