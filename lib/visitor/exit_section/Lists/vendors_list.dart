@@ -47,7 +47,7 @@ class _VendorsListState extends State<VendorsList> {
 //            }
 
             return ListView.builder(
-                reverse: true,
+
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (BuildContext context, int i) {
                   return snapshot.data.documents[i]['exit'] == null

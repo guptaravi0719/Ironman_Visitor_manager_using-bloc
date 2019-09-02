@@ -44,7 +44,7 @@ class _LeadListState extends State<LeadList> {
 //                _visitorList.add(snapshot.data.documents[ind]);
 //
 //            }
-            return ListView.builder(reverse: true,
+            return ListView.builder(
 //              itemCount: snapshot.data.documents.length,
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (BuildContext context, int i) {
