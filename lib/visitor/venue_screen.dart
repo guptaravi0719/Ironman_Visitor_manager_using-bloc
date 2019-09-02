@@ -171,49 +171,7 @@ class _VenueScreenState extends State<VenueScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 50.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-                  child: ButtonTheme(
-                    minWidth: 100,
-                    height: 50.0,
-                    child: OutlineButton(
-                      borderSide:
-                          BorderSide(color: Theme.of(context).primaryColor),
-                      splashColor: Colors.blue[100],
-                      disabledBorderColor: Colors.blue,
-                      highlightedBorderColor: Colors.blue,
-                      color: Colors.blueAccent,
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
-                      onPressed: () {
-                        actionSheetMethod(context);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Change location',
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 20.0),
-                          ),
-                          SizedBox(
-                            width: 20.0,
-                          ),
-                          Icon(
-                            Icons.location_on,
-                            color: Theme.of(context).primaryColor,
-                            size: 20.0,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+
                 SizedBox(
                   height: 20.0,
                 ),
@@ -318,196 +276,22 @@ class _VenueScreenState extends State<VenueScreen> {
     ).show(context);
   }
 
-  actionSheetMethod(BuildContext context) {
-    showCupertinoModalPopup(
-        context: context,
-        builder: (context) {
-          return CupertinoActionSheet(
-            title: Text(
-              "Locations",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            message: Text(
-              "Please select location from list below",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            cancelButton: CupertinoActionSheetAction(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Cancel'),
-            ),
-            actions: <Widget>[
-              CupertinoActionSheetAction(
-                child: Text(
-                  "Okhla",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                onPressed: () {
-                  addStringToSF("okhla");
-                  futureLocation(); //setting location from Shared Prefrences because it was future
-//                  setState(() {
-//                    location = 'okhla';
-//                  });
-                  Navigator.pop(context);
-                },
-              ),
-              CupertinoActionSheetAction(
-                child: Text(
-                  "Jhandewalan",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                onPressed: () {
-                  addStringToSF("jhandewalan");
-                  futureLocation();
-//                  setState(() {
-//                    location = 'jhandewalan';
-//                  });
-                  Navigator.pop(context);
-                },
-              ),
-              CupertinoActionSheetAction(
-                child: Text(
-                  "Noida Sector-63",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                onPressed: () {
-                  addStringToSF("noida-sec-63");
-                  futureLocation();
-//                  setState(() {
-//                    location = 'noida-sec-63';
-//                  });
-                  Navigator.pop(context);
-                },
-              ),
-              CupertinoActionSheetAction(
-                child: Text(
-                  "Noida Sector-1",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                onPressed: () {
-                  addStringToSF("noida-sec-1");
-                  futureLocation();
-//                  setState(() {
-//                    location = 'noida-sec-1';
-//                  });
-                  Navigator.pop(context);
-                },
-              ),
-              CupertinoActionSheetAction(
-                child: Text(
-                  "Noida Sector-2",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                onPressed: () {
-                  addStringToSF("noida-sec-2");
-                  futureLocation();
-//                  setState(() {
-//                    location = 'noida-sec-2';
-//                  });
-                  Navigator.pop(context);
-                },
-              ),
-              CupertinoActionSheetAction(
-                child: Text(
-                  "Nehru Place",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                onPressed: () {
-                  addStringToSF("nehru-place");
-                  futureLocation();
-//                  setState(() {
-//                    location = 'nehru-place';
-//                  });
-                  Navigator.pop(context);
-                },
-              ),
-              CupertinoActionSheetAction(
-                child: Text(
-                  "Mohan Estate",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                onPressed: () {
-                  addStringToSF("mohan-estate");
-                  futureLocation();
-//                  setState(() {
-//                    location = 'mohan-estate';
-//                  });
-                  Navigator.pop(context);
-                },
-              ),
-              CupertinoActionSheetAction(
-                child: Text(
-                  "Gurgaon Sector-18",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                onPressed: () {
-                  addStringToSF("gurugaon-sec-18");
-                  futureLocation();
-//                  setState(() {
-//                    location = 'gurugaon-sec-18';
-//                  });
-                  Navigator.pop(context);
-                },
-              ),
-              CupertinoActionSheetAction(
-                child: Text(
-                  "Gurgaon Sector-44",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                onPressed: () {
-                  addStringToSF("gurugaon-sec-44");
-                  futureLocation();
-//                  setState(() {
-//                    location = 'gurugaon-sec-44';
-//                  });
-                  Navigator.pop(context);
-                },
-              ),
-              CupertinoActionSheetAction(
-                child: Text(
-                  "Udyog Vihar",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                onPressed: () {
-                  addStringToSF("udyog-vihar");
-                  futureLocation();
-//                  setState(() {
-//                    location = 'udyog-vihar';
-//                  });
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          );
-        });
-  }
 
   futureLocation() {
-    getValuesSF().then((value) {
+    getLocationValuesSF().then((value) {
       setState(() {
         location = value;
       });
     });
+  futureVisitorBool() {
+    getAdminBoolValuesSF().then((value) {
+      setState(() {
+        visitorBool = value;
+      });
+    }
+
+
+    );
+  }
   }
 }

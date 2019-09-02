@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:visitor_management/admin/admin_portal.dart';
 import 'package:visitor_management/auth/auth.dart';
 import 'package:visitor_management/auth/visitor_auth.dart';
+import 'package:visitor_management/settings/location.dart';
 import 'package:visitor_management/visitor/venue_screen.dart';
 
 class RootPage extends StatefulWidget {
@@ -48,10 +50,10 @@ class _RootPageState extends State<RootPage> {
           onSignedIn: _signedIn,
         );
       case AuthStatus.signedIn:
-        return VenueScreen(
+        return visitorBool==true?VenueScreen(
           auth: widget.auth,
           onsignedOut: _signedOut,
-        );
+        ):AdminPortal();
     }
   }
 }

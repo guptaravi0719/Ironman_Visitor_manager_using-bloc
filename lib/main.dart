@@ -21,6 +21,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     futureLocation();
+    futureVisitorBool();
+    futureAdminBool();
     // TODO: implement initState
     super.initState();
   }
@@ -40,7 +42,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   futureLocation() {
-    getValuesSF().then((value) {
+    getLocationValuesSF().then((value) {
       setState(() {
         location = value;
       });
@@ -49,6 +51,29 @@ class _MyAppState extends State<MyApp> {
 
     );
   }
+
+  futureVisitorBool() {
+    getVisitorBoolValuesSF().then((value) {
+      setState(() {
+        visitorBool = value;
+      });
+    }
+
+
+    );
+  }
+
+  futureAdminBool() {
+    getAdminBoolValuesSF().then((value) {
+      setState(() {
+        adminBool = value;
+      });
+    }
+
+
+    );
+  }
+
 }
 
 

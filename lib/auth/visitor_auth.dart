@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart' as prefix0;
+import 'package:visitor_management/admin/admin_portal.dart';
+import 'package:visitor_management/admin/admin_screen_tabs.dart';
+import 'package:visitor_management/settings/location_shared_prefrences.dart';
 import 'package:visitor_management/visitor/venue_screen.dart';
 import 'auth.dart';
+import 'package:visitor_management/admin/admin_screen_tabs.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({this.auth, this.onSignedIn});
@@ -26,6 +30,8 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = new GlobalKey<FormState>();
   String _email;
   String _password;
+  bool visitorVal = false;
+  bool adminVal = false;
 
   bool _validateAndSave() {
     final form = formKey.currentState;
@@ -102,6 +108,63 @@ class _LoginPageState extends State<LoginPage> {
                       onSaved: (value) => _password = value,
                     ),
                     Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text("Visitor"),
+                              Checkbox(
+                                value: visitorVal,
+                                onChanged: (bool value) {
+                                  addAdminBoolToSF(false);
+
+                                  addVisitorBoolToSF(
+                                      true); //on checkingbox setting visitor bool  values toshared prefrence do that on app restart i can navigate to appropriate screen visitor or admin
+                                  setState(() {
+                                    if (value == true) {
+                                      adminVal = false;
+                                    }
+                                    print("admin value: $adminVal");
+
+                                    visitorVal = value;
+                                    print("visitor value: $visitorVal");
+                                  });
+                                },
+                              ),
+                            ],
+                          ), // [Tuesday] checkbox
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text("Admin"),
+                              Checkbox(
+                                value: adminVal,
+                                onChanged: (bool value) {
+                                  addAdminBoolToSF(true);
+
+                                  addVisitorBoolToSF(
+                                      false); //read above comment for information
+
+                                  setState(() {
+                                    if (value == true) {
+                                      visitorVal = false;
+                                    }
+                                    print("visitor value: $visitorVal");
+
+                                    adminVal = value;
+                                    print("admin value: $adminVal");
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
                       padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
                       child: ButtonTheme(
                         height: 50.0,
@@ -116,32 +179,11 @@ class _LoginPageState extends State<LoginPage> {
                                   color: Colors.white, fontSize: 20.0),
                             ),
                             onPressed: () async {
-                              FirebaseUser user;
-
-                              if (_validateAndSave()) {
-                                showLoginFloatingFlushbar(context);
-                                try {
-                                  user = await FirebaseAuth.instance
-                                      .signInWithEmailAndPassword(
-                                          email: _email, password: _password);
-                                } catch (e) {
-                                  print("error signing in The ERROR IS ${e}");
-
-                                  showErrorFloatingFlushbar(context);
-                                }
-
-                                if (user != null) {
-                                  Navigator.pop(context);
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => VenueScreen(
-                                              onsignedOut: onSignedOut,
-                                              auth: auth,
-                                            )),
-                                  );
-                                  print("SIGNED AS USER: ${user.uid}");
-                                }
+                              if (visitorVal == true) {
+                                _signInAsVisitor();
+                              }
+                              if (adminVal == true) {
+                                _signInAsAdmin();
                               }
                             }),
                       ),
@@ -150,6 +192,59 @@ class _LoginPageState extends State<LoginPage> {
                 )),
           );
         }));
+  }
+
+  void _signInAsVisitor() async {
+    FirebaseUser user;
+
+    if (_validateAndSave()) {
+      showLoginFloatingFlushbar(context);
+      try {
+        user = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: _email, password: _password);
+      } catch (e) {
+        print("error signing in The ERROR IS ${e}");
+
+        showErrorFloatingFlushbar(context);
+      }
+
+      if (user != null) {
+        Navigator.pop(context);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => VenueScreen(
+                    onsignedOut: onSignedOut,
+                    auth: auth,
+                  )),
+        );
+        print("SIGNED AS USER: ${user.uid}");
+      }
+    }
+  }
+
+  void _signInAsAdmin() async {
+    FirebaseUser user;
+
+    if (_validateAndSave()) {
+      showLoginFloatingFlushbar(context);
+      try {
+        user = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: _email, password: _password);
+      } catch (e) {
+        print("error signing in The ERROR IS ${e}");
+
+        showErrorFloatingFlushbar(context);
+      }
+
+      if (user != null) {
+        Navigator.pop(context);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => AdminPortal()));
+
+        print("SIGNED AS USER: ${user.uid}");
+      }
+    }
   }
 
   void showLoginFloatingFlushbar(BuildContext context) {
