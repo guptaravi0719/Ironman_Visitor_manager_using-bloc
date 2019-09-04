@@ -57,155 +57,205 @@ class _VendorsListState extends State<VendorsList> {
 //                   url=snapshot.data.documents[i]['url'];
 //                  }
                   return Container(
-                    height: MediaQuery.of(context).size.height / 3,
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: <Widget>[
-                            SizedBox(
-                              child: MeetNetworkImage(
-                                imageUrl: snapshot.data.documents[i]
-                                ['url'] ==
-                                    null
-                                    ? "http://mobileinternationalfestival.org/wp-content/uploads/2017/07/dummy-man-570x570.png"
-                                    : snapshot.data.documents[i]['url'],
-                                loadingBuilder: (context) => Center(
-                                  child: CircularProgressIndicator(),
+                    height: MediaQuery.of(context).size.height / 2.5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                        elevation: 10.0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(
+                                child: MeetNetworkImage(
+                                  imageUrl: snapshot.data.documents[i]
+                                  ['url'] ==
+                                      null
+                                      ? "http://mobileinternationalfestival.org/wp-content/uploads/2017/07/dummy-man-570x570.png"
+                                      : snapshot.data.documents[i]['url'],
+                                  loadingBuilder: (context) => Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                  errorBuilder: (context, e) => Center(
+                                    child: Image.asset('assets/person_dummy.png'),                                      ),
                                 ),
-                                errorBuilder: (context, e) => Center(
-                                  child: Image.asset('assets/person_dummy.png'),                                      ),
+                                //Image.network(snapshot.data.documents[i]['url']),
+                                height:
+                                MediaQuery.of(context).size.height / 4 -
+                                    30,
+                                width:
+                                MediaQuery.of(context).size.width / 4,
                               ),
-                              //Image.network(snapshot.data.documents[i]['url']),
-                              height:
-                              MediaQuery.of(context).size.height / 4 -
-                                  30,
-                              width:
-                              MediaQuery.of(context).size.width / 4,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                key: UniqueKey(),
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Text(
-                                        "Name:    ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(snapshot.data.documents[i]
-                                      ['name'])
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Text(
-                                        "meeting to:    ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(snapshot.data.documents[i]
-                                      ['person_to_meet']),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  key: UniqueKey(),
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          "Name:    ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(snapshot.data.documents[i]
+                                        ['name'])
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5.0,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          "meeting to:    ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(snapshot.data.documents[i]
+                                        ['person_to_meet']),
 
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Text(
-                                        "No. of Guests:    ",
-                                        style: TextStyle(
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5.0,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          "No. of Guests:    ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(snapshot.data.documents[i]
+                                        ['no_of_guests']),
+
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5.0,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          "purpose: ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        snapshot.data.documents[i]
+                                        ['purpose']==null? Text("Other"): Text(snapshot.data.documents[i]
+                                        ['purpose']),
+
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5.0,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          "Address: ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(snapshot.data.documents[i]
+                                        ['address']),
+
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5.0,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          "No. of Guests:    ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(snapshot.data.documents[i]
+                                        ['no_of_guests']),
+
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5.0,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          "Mobile:    ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(snapshot.data.documents[i]
+                                        ['phone no'])
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5.0,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          "Time:    ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(snapshot.data.documents[i]
+                                        ['time'])
+                                      ],
+                                    ),
+
+                                    SizedBox(
+                                      height: 5.0,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          "Exit Time: ",style:TextStyle(
                                             fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(snapshot.data.documents[i]
-                                      ['no_of_guests']),
-
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Text(
-                                        "Mobile:    ",
-                                        style: TextStyle(
+                                        ),
+                                        snapshot.data.documents[i]['exit']==null?Text("Not exited yet!"):
+                                        Text(snapshot.data.documents[i]
+                                        ['time'])
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5.0,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          "Rating: ",style:TextStyle(
                                             fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(snapshot.data.documents[i]
-                                      ['phone no'])
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Text(
-                                        "Time:    ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(snapshot.data.documents[i]
-                                      ['time'])
-                                    ],
-                                  ),
+                                        ),
+                                        snapshot.data.documents[i]['exit']==null?Text("No Ratings "):
+                                        Text(snapshot.data.documents[i]
+                                        ['rating'])
+                                      ],
+                                    ),
 
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Text(
-                                        "Exit Time: ",style:TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                      ),
-                                      snapshot.data.documents[i]['exit']==null?Text("Not exited yet!"):
-                                      Text(snapshot.data.documents[i]
-                                      ['time'])
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Text(
-                                        "Rating: ",style:TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                      ),
-                                      snapshot.data.documents[i]['exit']==null?Text("No Ratings "):
-                                      Text(snapshot.data.documents[i]
-                                      ['rating'])
-                                    ],
-                                  ),
+                                    // SmoothStarRating(
+                                    //     allowHalfRating: false,
+                                    //     onRatingChanged: (v) {
+                                    //       rating = v;
+                                    //       // setState(() {});
+                                    //     },
+                                    //     starCount: 5,
+                                    //     rating: rating,
+                                    //     size: 20.0,
+                                    //     color: Colors.green,
+                                    //     borderColor: Colors.green,
+                                    //     spacing: 0.0),
 
-                                  // SmoothStarRating(
-                                  //     allowHalfRating: false,
-                                  //     onRatingChanged: (v) {
-                                  //       rating = v;
-                                  //       // setState(() {});
-                                  //     },
-                                  //     starCount: 5,
-                                  //     rating: rating,
-                                  //     size: 20.0,
-                                  //     color: Colors.green,
-                                  //     borderColor: Colors.green,
-                                  //     spacing: 0.0),
-
-                                ],
-                              ),
-                            )
-                          ],
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

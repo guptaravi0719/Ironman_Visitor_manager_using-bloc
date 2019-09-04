@@ -22,6 +22,18 @@ class _VisitorDetailFormState extends State<VisitorDetailForm> {
   String _name;
   String _no_of_guests;
   String _person_to_meet;
+  String _address;
+  String _purpose;
+  List<String > _purposeList=[
+    'Interview',
+    'Training',
+    'Personal',
+    'Official',
+    'Other'
+    ,
+    'hub tour'
+
+  ];
 
   bool _validateAndSave() {
     final form = formKey.currentState;
@@ -36,11 +48,14 @@ class _VisitorDetailFormState extends State<VisitorDetailForm> {
     var now = new DateTime.now();
 
     if (_validateAndSave()) {
-      var no_of_guests=_no_of_guests!=null?"0":_no_of_guests;
+      var no_of_guests=_no_of_guests!=null?"1":_no_of_guests; // seting default value of guest to 1
       data_to_add['name'] = _name;
       data_to_add['no_of_guests'] = no_of_guests;   //if no entry rhen pushing 0
       data_to_add['person_to_meet'] = _person_to_meet;
       data_to_add['time'] = DateFormat("H:m:s").format(now);
+      data_to_add['address']=_address;
+      data_to_add['purpose']=_purpose;
+
       try {
         Firestore.instance
             .collection(
@@ -121,6 +136,48 @@ class _VisitorDetailFormState extends State<VisitorDetailForm> {
 //                  validator: (value) =>
 //                      value.isEmpty ? "no. of guests can't be empty" : null,
                   onSaved: (value) => _no_of_guests = value,
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+        Center(
+          child: SizedBox(
+            height: 50.0,
+            width: MediaQuery.of(context).size.width-60,
+            child: DropdownButton(
+              hint: Text('Please choose purpose'), // Not necessary for Option 1
+              value: _purpose,
+              onChanged: (newValue) {
+                setState(() {
+                  _purpose = newValue;
+                });
+              },
+              items: _purposeList.map((location) {
+                return DropdownMenuItem(
+                  child: new Text(location),
+                  value: location,
+                );
+              }).toList(),
+            ),
+          ),
+        ),
+
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                  //  textCapitalization: TextCapitalization.sentences,
+
+                  decoration: InputDecoration(
+                    labelText:"address",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                  ),
+                  validator: (value) =>
+                  value.isEmpty ? "Address can't be empty" : null,
+//                  validator: (value) =>
+//                      value.isEmpty ? "no. of guests can't be empty" : null,
+                  onSaved: (value) => _address = value,
                 ),
                 SizedBox(
                   height: 30.0,
