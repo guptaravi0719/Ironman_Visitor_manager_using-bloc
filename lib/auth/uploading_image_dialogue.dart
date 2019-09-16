@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
-import 'package:visitor_management/main.dart';
+
 Future<bool> uploadingImageDialogue(BuildContext context) {
   return showDialog(
       context: context,
@@ -9,19 +9,12 @@ Future<bool> uploadingImageDialogue(BuildContext context) {
       builder: (BuildContext context) {
         return AlertDialog(
             title: Text("Please Wait..."),
-
-            content:Row(
+            content: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-
-
-
-              Text("uploading"),
-              CircularProgressIndicator()
-
-
-            ],)
-
-        );
+                Text("uploading"),
+                CircularProgressIndicator()
+              ],
+            ));
       });
 }

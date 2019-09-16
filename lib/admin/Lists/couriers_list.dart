@@ -22,7 +22,7 @@ class _CouriersListState extends State<CouriersList> {
   void initState() {
     _stream = Firestore.instance
         .collection(
-        "locations/$location/people/${DateFormat("dd-MM-yyyy").format(now)}/daypass")
+            "locations/$location/people/${DateFormat("dd-MM-yyyy").format(now)}/couriers")
         .snapshots();
     super.initState();
   }
@@ -48,14 +48,8 @@ class _CouriersListState extends State<CouriersList> {
 //
 //            }
             return ListView.builder(
-
-//              itemCount: snapshot.data.documents.length,
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (BuildContext context, int i) {
-                  //    String url="https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png";
-//                  if(snapshot.data.documents[i]['url']!=null?true:false){
-//                   url=snapshot.data.documents[i]['url'];
-//                  }
                   return Container(
                     height: MediaQuery.of(context).size.height / 2.5,
                     child: Padding(
@@ -68,30 +62,28 @@ class _CouriersListState extends State<CouriersList> {
                             children: <Widget>[
                               SizedBox(
                                 child: MeetNetworkImage(
-                                  imageUrl: snapshot.data.documents[i]
-                                  ['url'] ==
-                                      null
+                                  imageUrl: snapshot.data.documents[i]['url'] ==
+                                          null
                                       ? "http://mobileinternationalfestival.org/wp-content/uploads/2017/07/dummy-man-570x570.png"
                                       : snapshot.data.documents[i]['url'],
                                   loadingBuilder: (context) => Center(
                                     child: CircularProgressIndicator(),
                                   ),
                                   errorBuilder: (context, e) => Center(
-                                    child: Image.asset('assets/person_dummy.png'),                                      ),
+                                    child:
+                                        Image.asset('assets/person_dummy.png'),
+                                  ),
                                 ),
                                 //Image.network(snapshot.data.documents[i]['url']),
                                 height:
-                                MediaQuery.of(context).size.height / 4 -
-                                    30,
-                                width:
-                                MediaQuery.of(context).size.width / 4,
+                                    MediaQuery.of(context).size.height / 4 - 30,
+                                width: MediaQuery.of(context).size.width / 4,
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
                                   key: UniqueKey(),
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Row(
                                       children: <Widget>[
@@ -100,8 +92,7 @@ class _CouriersListState extends State<CouriersList> {
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        Text(snapshot.data.documents[i]
-                                        ['name'])
+                                        Text(snapshot.data.documents[i]['name'])
                                       ],
                                     ),
                                     SizedBox(
@@ -115,8 +106,7 @@ class _CouriersListState extends State<CouriersList> {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(snapshot.data.documents[i]
-                                        ['person_to_meet']),
-
+                                            ['person_to_meet']),
                                       ],
                                     ),
                                     SizedBox(
@@ -130,8 +120,7 @@ class _CouriersListState extends State<CouriersList> {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(snapshot.data.documents[i]
-                                        ['no_of_guests']),
-
+                                            ['no_of_guests']),
                                       ],
                                     ),
                                     SizedBox(
@@ -144,10 +133,11 @@ class _CouriersListState extends State<CouriersList> {
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        snapshot.data.documents[i]
-                                        ['purpose']==null? Text("Other"): Text(snapshot.data.documents[i]
-                                        ['purpose']),
-
+                                        snapshot.data.documents[i]['purpose'] ==
+                                                null
+                                            ? Text("Other")
+                                            : Text(snapshot.data.documents[i]
+                                                ['purpose']),
                                       ],
                                     ),
                                     SizedBox(
@@ -161,8 +151,7 @@ class _CouriersListState extends State<CouriersList> {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(snapshot.data.documents[i]
-                                        ['address']),
-
+                                            ['address']),
                                       ],
                                     ),
                                     SizedBox(
@@ -176,8 +165,7 @@ class _CouriersListState extends State<CouriersList> {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(snapshot.data.documents[i]
-                                        ['no_of_guests']),
-
+                                            ['no_of_guests']),
                                       ],
                                     ),
                                     SizedBox(
@@ -191,7 +179,7 @@ class _CouriersListState extends State<CouriersList> {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(snapshot.data.documents[i]
-                                        ['phone no'])
+                                            ['phone no'])
                                       ],
                                     ),
                                     SizedBox(
@@ -204,8 +192,7 @@ class _CouriersListState extends State<CouriersList> {
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        Text(snapshot.data.documents[i]
-                                        ['time'])
+                                        Text(snapshot.data.documents[i]['time'])
                                       ],
                                     ),
 
@@ -215,12 +202,15 @@ class _CouriersListState extends State<CouriersList> {
                                     Row(
                                       children: <Widget>[
                                         Text(
-                                          "Exit Time: ",style:TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                          "Exit Time: ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                        snapshot.data.documents[i]['exit']==null?Text("Not exited yet!"):
-                                        Text(snapshot.data.documents[i]
-                                        ['time'])
+                                        snapshot.data.documents[i]['exit'] ==
+                                                null
+                                            ? Text("Not exited yet!")
+                                            : Text(snapshot.data.documents[i]
+                                                ['time'])
                                       ],
                                     ),
                                     SizedBox(
@@ -229,12 +219,15 @@ class _CouriersListState extends State<CouriersList> {
                                     Row(
                                       children: <Widget>[
                                         Text(
-                                          "Rating: ",style:TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                          "Rating: ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                        snapshot.data.documents[i]['exit']==null?Text("No Ratings "):
-                                        Text(snapshot.data.documents[i]
-                                        ['rating'])
+                                        snapshot.data.documents[i]['exit'] ==
+                                                null
+                                            ? Text("No Ratings ")
+                                            : Text(snapshot.data.documents[i]
+                                                ['rating'])
                                       ],
                                     ),
 
@@ -250,7 +243,6 @@ class _CouriersListState extends State<CouriersList> {
                                     //     color: Colors.green,
                                     //     borderColor: Colors.green,
                                     //     spacing: 0.0),
-
                                   ],
                                 ),
                               )
@@ -260,7 +252,6 @@ class _CouriersListState extends State<CouriersList> {
                       ),
                     ),
                   );
-
                 });
           }
         },
