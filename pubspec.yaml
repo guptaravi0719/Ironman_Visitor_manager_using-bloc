@@ -20,7 +20,8 @@ dependencies:
   flutter:
     sdk: flutter
   shared_preferences:
-  cloud_firestore: ^0.8.2+3
+  cloud_firestore:
+
   rating_bar:
   smooth_star_rating: ^1.0.3
   flutter_rating_bar:
@@ -35,8 +36,11 @@ dependencies:
   firebase_auth:
   connectivity:
   meet_network_image :
-  flushbar: ^1.5.0
-
+  #flushbar: ^1.5.0
+  flushbar:
+    git:
+      url: https://github.com/AndreHaueisen/flushbar.git
+      ref: 13c55a8
   countdown:
   http:
   # The following adds the Cupertino Icons font to your application.

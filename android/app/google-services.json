@@ -1,34 +1,71 @@
 {
   "project_info": {
-    "project_number": "429233940501",
-    "firebase_url": "https://visitorironman.firebaseio.com",
-    "project_id": "visitorironman",
-    "storage_bucket": "visitorironman.appspot.com"
+    "project_number": "626288956852",
+    "firebase_url": "https://ironman-bloc.firebaseio.com",
+    "project_id": "ironman-bloc",
+    "storage_bucket": "ironman-bloc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:429233940501:android:406fcafa985e4e67",
+        "mobilesdk_app_id": "1:626288956852:android:40a98fef13186e9fb70ee1",
         "android_client_info": {
-          "package_name": "com.xploryo.visitor_management"
+          "package_name": "com.example.ironmanbloc"
         }
       },
       "oauth_client": [
         {
-          "client_id": "429233940501-092ev5lfs1dgchres38m087rcimclmfe.apps.googleusercontent.com",
+          "client_id": "626288956852-oifl58oe4jce2nt7t9nbacva814gk7sp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ironmanbloc",
+            "certificate_hash": "fa0e21f1cc208fa7aaf28fcc046e09bbc05601f5"
+          }
+        },
+        {
+          "client_id": "626288956852-9e9aurnh9l97kbtdm4sknudqp3p14njf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBsn6C9OW5ls1E4M-R4iMNEb_RwjyZXW9w"
+          "current_key": "AIzaSyA8WFVw2hcEMxS1FZqjiD4cd-sQSdS1Xcs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "429233940501-092ev5lfs1dgchres38m087rcimclmfe.apps.googleusercontent.com",
+              "client_id": "626288956852-9e9aurnh9l97kbtdm4sknudqp3p14njf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626288956852:android:5090bd908c9b0f64b70ee1",
+        "android_client_info": {
+          "package_name": "com.xploryo.visitor_management"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "626288956852-9e9aurnh9l97kbtdm4sknudqp3p14njf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8WFVw2hcEMxS1FZqjiD4cd-sQSdS1Xcs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "626288956852-9e9aurnh9l97kbtdm4sknudqp3p14njf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

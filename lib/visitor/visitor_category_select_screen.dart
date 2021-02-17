@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/generated/i18n.dart';
 import 'package:visitor_management/auth/extra_dummy/mobile_verification_screen.dart';
 import 'package:visitor_management/auth/phone_auth_Screen.dart';
 import 'package:visitor_management/visitor/exit_section/exit_screen_tabs.dart';
